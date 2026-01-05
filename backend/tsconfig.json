@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es2020",
-    "outDir": "dist",
+    "target": "ES2017",
+    "lib": ["ES2017", "DOM"],
+    "moduleResolution": "node",
     "rootDir": "src",
-    "strict": true,
+    "outDir": "dist",
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": true,
     "skipLibCheck": true
-  }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
+
