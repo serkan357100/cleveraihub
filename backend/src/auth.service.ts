@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  private users = []; // Demo amaçlý, gerçek projede DB kullanýn
+  private users = []; // Demo amaÃ§lÃ½, gerÃ§ek projede DB kullanÃ½n
 
   constructor(private jwtService: JwtService) {}
 
@@ -25,7 +25,7 @@ export class AuthService {
   async login(data: { email: string; password: string }) {
     const user = this.users.find((u) => u.email === data.email);
     if (!user || !(await bcrypt.compare(data.password, user.password))) {
-      throw new UnauthorizedException('Geçersiz email veya þifre');
+      throw new UnauthorizedException('GeÃ§ersiz email veya Ã¾ifre');
     }
 
     const token = this.jwtService.sign({ id: user.id, email: user.email });
