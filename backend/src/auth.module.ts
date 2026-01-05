@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'cleverai_secret_key',
-      signOptions: { expiresIn: '7d' },
+      // In a real project, move this to an environment variable
+      secret: process.env.JWT_SECRET || 'dev-secret',
+      signOptions: { expiresIn: '1d' },
     }),
   ],
-  controllers: [AuthController],
   providers: [AuthService],
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {}
