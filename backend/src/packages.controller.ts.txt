@@ -1,0 +1,17 @@
+import { Controller, Post, Get, Body, Param } from '@nestjs/common';
+import { PackagesService } from './packages.service';
+
+@Controller('packages')
+export class PackagesController {
+  constructor(private packagesService: PackagesService) {}
+
+  @Post('recommend')
+  async recommend(@Body() body: { profession: string; country?: string }) {
+    return this.packagesService.recommend(body);
+  }
+
+  @Get(':id')
+  async getById(@Param('id') id: string) {
+    return this.packagesService.getById(id);
+  }
+}

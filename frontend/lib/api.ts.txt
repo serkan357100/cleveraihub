@@ -1,0 +1,41 @@
+import axios from 'axios';
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000/api';
+
+export const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: { 'Content-Type': 'application/json' },
+});
+
+api.interceptors.request.use((config) => {
+  const cookies = parseCookies();
+  if (cookies.jwt) {
+    config.headers.Authorization = Bearer ${cookies.jwt};
+  }
+  return config;
+});
+
+export const authApi = {
+  login: async (data: { email: string; password: string }) => {
+    const response = await api.post('/users/login', data);
+    if (response.data.token) {
+      setCookie(null, 'jwt', response.data.token, { maxAge: 7 * 24 * 60 * 60, path: '/' });
+    }
+    return response;
+  },
+  getMe: () => api.get('/users/me'),
+};
+
+export const packagesApi = {
+  recommend: (data: { profession: string }) => api.post('/packages/recommend', data),
+  getById: (id: string) => api.get(/packages/${id}),
+};
+
+export const paymentsApi = {
+  checkout: (data: { packageId: string; paymentMethodId: string }) => api.post('/payments/checkout', data),
+};
+
+export const dashboardApi = {
+  getData: () => api.get('/user/dashboard'),
+};
