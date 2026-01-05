@@ -22,13 +22,13 @@ export default function Checkout() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">÷deme</h1>
+        <h1 className="text-3xl font-bold mb-8">√ñdeme</h1>
         <button
           onClick={handleCheckout}
           disabled={loading}
           className="w-full py-4 bg-cyan-500 hover:bg-cyan-600 disabled:bg-gray-600 rounded-lg font-bold"
         >
-          {loading ? '›˛leniyor...' : '÷demeyi Tamamla'}
+          {loading ? '√ù√æleniyor...' : '√ñdemeyi Tamamla'}
         </button>
       </div>
     </div>
