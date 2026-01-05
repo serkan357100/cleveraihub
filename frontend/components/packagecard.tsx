@@ -14,7 +14,7 @@ export default function PackageCard({ package: pkg }: any) {
         onClick={() => router.push(/checkout?packageId=${pkg.id})}
         className="w-full bg-cyan-500 hover:bg-cyan-600 py-2 rounded font-semibold"
       >
-        Hýzlý Baþlat
+        HÃ½zlÃ½ BaÃ¾lat
       </button>
     </div>
   );
