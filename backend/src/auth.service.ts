@@ -1,20 +1,19 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  private users = [];
+  // users dizisinin tipini belirledik ki 'never' hatası vermesin
+  private users: any[] = [];
 
   constructor(private jwtService: JwtService) {}
 
-  async register(data: { email: string; password: string; name: string }) {
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+  async register(data: any) {
     const user = {
       id: Date.now().toString(),
       email: data.email,
       name: data.name,
-      password: hashedPassword,
+      password: data.password,
     };
     this.users.push(user);
     
@@ -22,9 +21,9 @@ export class AuthService {
     return { token, user: { id: user.id, email: user.email, name: user.name } };
   }
 
-  async login(data: { email: string; password: string }) {
+  async login(data: any) {
     const user = this.users.find((u) => u.email === data.email);
-    if (!user || !(await bcrypt.compare(data.password, user.password))) {
+    if (!user || user.password !== data.password) {
       throw new UnauthorizedException('Invalid email or password');
     }
     
@@ -36,7 +35,7 @@ export class AuthService {
     if (!authHeader) throw new UnauthorizedException();
     const token = authHeader.replace('Bearer ', '');
     try {
-      const decoded = this.jwtService.verify(token);
+      const decoded = this.jwtService.verify(token) as any;
       const user = this.users.find((u) => u.id === decoded.id);
       if (!user) throw new UnauthorizedException();
       return { id: user.id, email: user.email, name: user.name };
