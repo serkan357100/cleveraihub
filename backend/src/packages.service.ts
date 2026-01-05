@@ -5,13 +5,13 @@ export class PackagesService {
   private packages = [
     {
       id: '1',
-      name: 'Emlakçý Starter Paketi',
-      target_profession: 'Emlakçý',
+      name: 'Emlakci Starter Paketi',
+      target_profession: 'Emlakci',
       summary: 'WhatsApp + CRM + Randevu sistemi',
-      description: 'Emlak profesyonelleri için hazýrlanmýþ temel otomasyon paketi',
+      description: 'Emlak profesyonelleri icin hazirlanmis temel otomasyon paketi',
       modules: [
-        { key: 'whatsapp', title: 'WhatsApp Agent', description: 'Otomatik mesajlaþma' },
-        { key: 'crm', title: 'CRM', description: 'Müþteri yönetimi' },
+        { key: 'whatsapp', title: 'WhatsApp Agent', description: 'Otomatik mesajlasma' },
+        { key: 'crm', title: 'CRM', description: 'Musteri yonetimi' },
         { key: 'appointment', title: 'Randevu', description: 'Otomatik randevu alma' },
       ],
       pricing: { monthly_usd: 29, one_time_usd: null },
@@ -22,11 +22,11 @@ export class PackagesService {
       name: 'Avukat Pro Paketi',
       target_profession: 'Avukat',
       summary: 'CRM + Mail + Randevu',
-      description: 'Hukuk bürolarý için profesyonel otomasyon',
+      description: 'Hukuk burolari icin profesyonel otomasyon',
       modules: [
-        { key: 'crm', title: 'CRM', description: 'Müþteri yönetimi' },
-        { key: 'mail', title: 'Mail Agent', description: 'Otomatik mail gönderimi' },
-        { key: 'appointment', title: 'Randevu', description: 'Randevu yönetimi' },
+        { key: 'crm', title: 'CRM', description: 'Musteri yonetimi' },
+        { key: 'mail', title: 'Mail Agent', description: 'Otomatik mail gonderimi' },
+        { key: 'appointment', title: 'Randevu', description: 'Randevu yonetimi' },
       ],
       pricing: { monthly_usd: 59, one_time_usd: null },
       priceUsd: 59,
@@ -44,3 +44,4 @@ export class PackagesService {
     return this.packages.find((p) => p.id === id) || null;
   }
 }
+
