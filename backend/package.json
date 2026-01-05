@@ -1,6 +1,6 @@
-"main": "src/main.ts",
 "scripts": {
+  "build": "tsc",
   "start": "ts-node src/main.ts",
-  "build": "tsc"
+  "start:prod": "node dist/main.js"
 }
 
