@@ -5,7 +5,7 @@ export class DashboardService {
   async getDashboard() {
     return {
       packages: [
-        { id: '1', name: 'Emlakçý Starter', status: 'active', priceUsd: 29 },
+        { id: '1', name: 'EmlakÃ§Ã½ Starter', status: 'active', priceUsd: 29 },
       ],
       revenue: {
         totalEarnings: 150,
@@ -13,7 +13,7 @@ export class DashboardService {
         platformShare: 37.5,
       },
       notifications: [
-        { id: '1', message: 'Yeni satýþ: Emlakçý Starter', createdAt: new Date().toISOString() },
+        { id: '1', message: 'Yeni satÃ½Ã¾: EmlakÃ§Ã½ Starter', createdAt: new Date().toISOString() },
       ],
     };
   }
