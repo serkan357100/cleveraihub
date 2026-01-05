@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  // users dizisinin tipini belirledik ki 'never' hatası vermesin
+  // Basit tutmak için tipi any[] yaptık, TypeScript'e takılmasın
   private users: any[] = [];
 
   constructor(private jwtService: JwtService) {}
@@ -16,7 +16,7 @@ export class AuthService {
       password: data.password,
     };
     this.users.push(user);
-    
+
     const token = this.jwtService.sign({ id: user.id, email: user.email });
     return { token, user: { id: user.id, email: user.email, name: user.name } };
   }
@@ -26,7 +26,7 @@ export class AuthService {
     if (!user || user.password !== data.password) {
       throw new UnauthorizedException('Invalid email or password');
     }
-    
+
     const token = this.jwtService.sign({ id: user.id, email: user.email });
     return { token, user: { id: user.id, email: user.email, name: user.name } };
   }
