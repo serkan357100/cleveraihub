@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth.module';
 import { PaymentsService } from './payments/payments.service';
 import { PackagesService } from './packages/packages.service';
 import { DashboardService } from './dashboard/dashboard.service';
@@ -10,3 +10,4 @@ import { DashboardService } from './dashboard/dashboard.service';
   providers: [PaymentsService, PackagesService, DashboardService],
 })
 export class AppModule {}
+
