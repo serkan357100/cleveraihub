@@ -34,8 +34,8 @@ export default function PackagePage({ packageData }: PackagePageProps) {
   };
 
   const handleQuickStart = () => {
-    // Bu kýsýmda backend /api/packages/activate veya benzeri endpoint çaðrýlýr
-    setSuccessMessage('Paket baþarýyla baþlatýldý!');
+    // Bu kÃ½sÃ½mda backend /api/packages/activate veya benzeri endpoint Ã§aÃ°rÃ½lÃ½r
+    setSuccessMessage('Paket baÃ¾arÃ½yla baÃ¾latÃ½ldÃ½!');
     setTimeout(() => setSuccessMessage(''), 5000);
   };
 
@@ -45,7 +45,7 @@ export default function PackagePage({ packageData }: PackagePageProps) {
         <h1 className="text-4xl font-bold text-cyan-400 mb-4">{packageData.name}</h1>
         <p className="text-gray-300 mb-6">{packageData.description}</p>
         <div className="flex space-x-4 mb-6">
-          <span className="px-4 py-2 bg-blue-800 rounded">Aylýk: ${packageData.priceMonthly}</span>
+          <span className="px-4 py-2 bg-blue-800 rounded">AylÃ½k: ${packageData.priceMonthly}</span>
           <span className="px-4 py-2 bg-blue-800 rounded">Tek Seferlik: ${packageData.priceOneTime}</span>
         </div>
 
@@ -66,12 +66,12 @@ export default function PackagePage({ packageData }: PackagePageProps) {
             onClick={handleQuickStart}
             className="px-6 py-3 bg-cyan-400 text-gray-900 font-bold rounded hover:bg-cyan-500 transition"
           >
-            Hýzlý Baþlat
+            HÃ½zlÃ½ BaÃ¾lat
           </button>
           <button
             className="px-6 py-3 border border-cyan-400 text-cyan-400 font-bold rounded hover:bg-cyan-700 transition"
           >
-            Detay / Özelleþtir
+            Detay / Ã–zelleÃ¾tir
           </button>
         </div>
 
