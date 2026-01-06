@@ -5,4 +5,9 @@ const api = axios.create({
   withCredentials: true,
 });
 
+export const paymentsApi = api;
+export const packagesApi = api;
+export const authApi = api;
+export const dashboardApi = api;
+
 export default api;
