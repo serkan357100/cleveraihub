@@ -1,7 +1,7 @@
 // frontend/pages/packages/[id].tsx
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
-import PackageCard from '@/components/PackageCard';
+import PackageCard from '../components/PackageCard';
 
 interface PackageModule {
   id: string;
@@ -92,4 +92,5 @@ export const getServerSideProps: GetServerSideProps = async context => {
     props: { packageData },
   };
 };
+
 
