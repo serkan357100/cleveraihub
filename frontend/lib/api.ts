@@ -5,13 +5,4 @@ const api = axios.create({
 });
 
 export const packagesApi = {
-  list: () => api.get('/packages'),
-  getById: (id: string) => api.get(`/packages/${id}`),
-};
-
-export const dashboardApi = {
-  get: () => api.get('/dashboard'),
-};
-
-export default api;
-
+  list: () => api.get('/package
