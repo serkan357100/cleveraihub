@@ -5,9 +5,9 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// Basit API wrapper'ları (MVP)
 export const paymentsApi = {
-  checkout: (payload: any) => api.post('/payments/checkout', payload),
+  checkout: (payload: { packageId: string; paymentMethodId?: string }) =>
+    api.post('/payments/checkout', payload),
 };
 
 export const packagesApi = {
@@ -26,4 +26,3 @@ export const dashboardApi = {
 };
 
 export default api;
-
