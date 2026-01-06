@@ -85,13 +85,14 @@ export default function PackagePage({ packageData }: PackagePageProps) {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { id } = context.params as { id: string };
-  const res = await fetch(${process.env.BACKEND_URL}/api/packages/${id});
+  const res = await fetch(`${process.env.BACKEND_URL}/api/packages/${id}`);
   const packageData = await res.json();
 
   return {
     props: { packageData },
   };
 };
+
 
 
 
