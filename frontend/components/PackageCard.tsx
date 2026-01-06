@@ -1,28 +1,38 @@
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function PackageCard({ package: pkg }: any) {
-  const router = useRouter();
-
-  // Eğer paket verisi yoksa hiçbir şey render etme
-  if (!pkg) return null;
-
-  // Fiyatı güvenli şekilde al
-  const price = pkg.pricing?.monthly_usd || pkg.priceUsd || 0;
+  const price = pkg.pricing?.monthly_usd || 29;
 
   return (
-    <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-cyan-400 transition-all">
-      <h3 className="text-xl font-bold mb-2">{pkg.name || 'İsimsiz Paket'}</h3>
-      <p className="text-gray-400 text-sm mb-4">{pkg.summary || 'Açıklama yok'}</p>
-      <p className="text-2xl font-bold text-cyan-400 mb-4">
-        ${price}/ay
-      </p>
+    <div className="bg-[#111827] rounded-2xl p-6 border border-gray-800 hover:border-cyan-500/50 transition-all group shadow-lg">
+      <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-cyan-400 transition-colors">{pkg.name}</h3>
+      <p className="text-gray-400 text-sm mb-6 line-clamp-2">{pkg.summary}</p>
+      
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <p className="text-xs text-gray-500 uppercase">Aylık</p>
+          <p className="text-2xl font-bold text-white">${price}</p>
+        </div>
+        <div className="text-right">
+          <p className="text-xs text-gray-500 uppercase">Durum</p>
+          <p className="text-sm font-medium text-green-400">Aktif</p>
+        </div>
+      </div>
 
-      <button
-        onClick={() => router.push(`/packages/${pkg.id}`)}
-        className="w-full bg-cyan-500 hover:bg-cyan-600 py-2 rounded font-semibold transition-all"
-      >
-        Hızlı Başlat
-      </button>
+      <div className="grid grid-cols-2 gap-3">
+        <Link 
+          href={`/packages/${pkg.id}`}
+          className="py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-bold text-sm transition-all text-center"
+        >
+          Hızlı Başlat
+        </Link>
+        <Link 
+          href={`/packages/${pkg.id}`}
+          className="py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl font-bold text-sm transition-all text-center border border-gray-700"
+        >
+          Detaylar
+        </Link>
+      </div>
     </div>
   );
 }
