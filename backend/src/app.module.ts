@@ -4,6 +4,7 @@ import { PaymentsModule } from './payments.module';
 import { PackagesModule } from './packages.module';
 import { DashboardModule } from './dashboard.module';
 import { AppController } from './app.controller';
+import { AiModule } from './ai.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { AppController } from './app.controller';
     PaymentsModule,
     PackagesModule,
     DashboardModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [],
