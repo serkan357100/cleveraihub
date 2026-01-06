@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import PackageCard from '../../components/PackageCard';
 import { packagesApi } from '@/lib/api';
 import PackageCard from '@/components/PackageCard';
 
