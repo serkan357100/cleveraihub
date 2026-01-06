@@ -5,9 +5,25 @@ const api = axios.create({
   withCredentials: true,
 });
 
-export const paymentsApi = api;
-export const packagesApi = api;
-export const authApi = api;
-export const dashboardApi = api;
+// Basit API wrapper'ları (MVP)
+export const paymentsApi = {
+  checkout: (payload: any) => api.post('/payments/checkout', payload),
+};
+
+export const packagesApi = {
+  list: () => api.get('/packages'),
+  getById: (id: string) => api.get(`/packages/${id}`),
+};
+
+export const authApi = {
+  login: (payload: any) => api.post('/auth/login', payload),
+  register: (payload: any) => api.post('/auth/register', payload),
+  me: () => api.get('/auth/me'),
+};
+
+export const dashboardApi = {
+  get: () => api.get('/dashboard'),
+};
 
 export default api;
+
