@@ -28,9 +28,10 @@ export default function Checkout() {
           disabled={loading}
           className="w-full py-4 bg-cyan-500 hover:bg-cyan-600 disabled:bg-gray-600 rounded-lg font-bold"
         >
-          {loading ? 'Ýþleniyor...' : 'Ödemeyi Tamamla'}
+          {loading ? 'İşleniyor...' : 'Ödemeyi Tamamla'}
         </button>
       </div>
     </div>
   );
 }
+
