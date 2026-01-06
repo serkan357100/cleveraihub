@@ -10,7 +10,7 @@ export default function Checkout() {
   const handleCheckout = async () => {
     setLoading(true);
     try {
-      await paymentsApi.checkout({ packageId: packageId as string, paymentMethodId: 'pm_demo' });
+      await paymentsApi.createCheckout({ packageId: packageId as string, paymentMethodId: 'pm_demo' });
       router.push('/dashboard');
     } catch (err) {
       console.error(err);
@@ -34,4 +34,3 @@ export default function Checkout() {
     </div>
   );
 }
-
