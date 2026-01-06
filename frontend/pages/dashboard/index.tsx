@@ -44,9 +44,14 @@ export default function Dashboard() {
         <section>
           <h2 className="text-2xl font-semibold mb-6 text-gray-200">Hızlı İşlemler</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <button className="p-6 bg-gradient-to-br from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 rounded-2xl font-bold text-xl shadow-lg transition-all transform hover:scale-[1.02]">
+            {/* BURASI DEĞİŞTİ: button yerine Link geldi */}
+            <Link 
+              href="/dashboard/create-package" 
+              className="p-6 bg-gradient-to-br from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 rounded-2xl font-bold text-xl shadow-lg transition-all transform hover:scale-[1.02] flex items-center justify-center text-center"
+            >
               + Yeni Otomasyon Paketi Oluştur
-            </button>
+            </Link>
+            
             <Link href="/packages" className="p-6 bg-[#1f2937] hover:bg-[#374151] rounded-2xl font-bold text-xl shadow-lg transition-all transform hover:scale-[1.02] flex items-center justify-center border border-gray-700">
               🛒 Marketplace'e Göz At
             </Link>
@@ -56,5 +61,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-
