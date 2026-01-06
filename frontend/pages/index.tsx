@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
 
 export default function Home() {
   const [profession, setProfession] = useState('');
@@ -11,11 +10,13 @@ export default function Home() {
     if (!profession) return alert('Lütfen mesleğinizi yazın.');
     setLoading(true);
     try {
-      // Backend AI endpoint'ine istek atıyoruz
-      const res = await axios.post('https://cleveraihub-8.onrender.com/api/ai/recommend', {
-        profession: profession
+      const res = await fetch('https://cleveraihub-8.onrender.com/api/ai/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profession }),
       });
-      setResult(res.data);
+      const data = await res.json();
+      setResult(data);
     } catch (err) {
       console.error(err);
       alert('Analiz sırasında bir hata oluştu.');
@@ -23,6 +24,10 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  // Backend'den gelen veriyi güvenli hale getiriyoruz
+  const automations = Array.isArray(result?.automations) ? result.automations : [];
+  const missingInfoNeeded = Array.isArray(result?.missingInfoNeeded) ? result.missingInfoNeeded : [];
 
   return (
     <div className="min-h-screen bg-[#0a0f1a] text-white font-sans">
@@ -62,34 +67,49 @@ export default function Home() {
                 {loading ? 'Analiz Ediliyor...' : 'Analiz Et'}
               </button>
             </div>
+
+            <div className="mt-16 flex justify-center gap-6">
+              <Link href="/packages" className="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl font-bold transition-all border border-gray-700">
+                Paketleri Keşfet
+              </Link>
+            </div>
           </div>
         ) : (
           /* AI ANALİZ SONUÇ EKRANI */
-          <div className="bg-[#111827] rounded-3xl p-8 md:p-12 border border-gray-800 shadow-2xl animate-fade-in">
+          <div className="bg-[#111827] rounded-3xl p-8 md:p-12 border border-gray-800 shadow-2xl">
             <button onClick={() => setResult(null)} className="text-gray-500 hover:text-white mb-6">← Yeni Analiz</button>
-            <h2 className="text-3xl font-bold text-cyan-400 mb-4">{result.title}</h2>
-            <p className="text-gray-300 text-lg mb-8 leading-relaxed">{result.summary}</p>
+            <h2 className="text-3xl font-bold text-cyan-400 mb-4">{result?.title || 'Analiz Sonucu'}</h2>
+            <p className="text-gray-300 text-lg mb-8 leading-relaxed">{result?.summary || ''}</p>
 
             <div className="grid md:grid-cols-2 gap-8 mb-12">
               <div className="bg-[#0a0f1a] p-6 rounded-2xl border border-gray-800">
                 <h3 className="font-bold text-white mb-4 uppercase tracking-widest text-sm">Önerilen Otomasyonlar</h3>
-                <ul className="space-y-3">
-                  {result.automations.map((item: string, i: number) => (
-                    <li key={i} className="flex items-start gap-3 text-gray-400">
-                      <span className="text-cyan-500">✔</span> {item}
-                    </li>
-                  ))}
-                </ul>
+                {automations.length > 0 ? (
+                  <ul className="space-y-3">
+                    {automations.map((item: string, i: number) => (
+                      <li key={i} className="flex items-start gap-3 text-gray-400">
+                        <span className="text-cyan-500">✔</span> {item}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500">Veri yükleniyor...</p>
+                )}
               </div>
+
               <div className="bg-[#0a0f1a] p-6 rounded-2xl border border-gray-800">
                 <h3 className="font-bold text-white mb-4 uppercase tracking-widest text-sm">Gerekli Bilgiler</h3>
-                <ul className="space-y-3">
-                  {result.missingInfoNeeded.map((item: string, i: number) => (
-                    <li key={i} className="flex items-start gap-3 text-gray-400">
-                      <span className="text-yellow-500">●</span> {item}
-                    </li>
-                  ))}
-                </ul>
+                {missingInfoNeeded.length > 0 ? (
+                  <ul className="space-y-3">
+                    {missingInfoNeeded.map((item: string, i: number) => (
+                      <li key={i} className="flex items-start gap-3 text-gray-400">
+                        <span className="text-yellow-500">●</span> {item}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500">Veri yükleniyor...</p>
+                )}
               </div>
             </div>
 
