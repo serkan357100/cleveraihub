@@ -1,12 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
-import { DashboardService } from './dashboard.service';
 
-@Controller('user')
+@Controller('dashboard')
 export class DashboardController {
-  constructor(private dashboardService: DashboardService) {}
-
-  @Get('dashboard')
-  async getDashboard() {
-    return this.dashboardService.getDashboard();
+  @Get()
+  getDashboard() {
+    return {
+      activeSubscriptions: 0,
+      totalEarnings: 0,
+      notificationsCount: 0,
+    };
   }
 }
