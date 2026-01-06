@@ -10,11 +10,12 @@ export default function PackageCard({ package: pkg }: any) {
       <p className="text-2xl font-bold text-cyan-400 mb-4">
         ${pkg.pricing.monthly_usd}/ay
       </p>
+
       <button
-        onClick={() => router.push(/checkout?packageId=${pkg.id})}
+        onClick={() => router.push(`/checkout?packageId=${pkg.id}`)}
         className="w-full bg-cyan-500 hover:bg-cyan-600 py-2 rounded font-semibold"
       >
-        Hýzlý Baþlat
+        Hızlı Başlat
       </button>
     </div>
   );
