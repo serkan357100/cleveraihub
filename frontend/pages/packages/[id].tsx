@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../../components/layout/Navbar";
 import Footer from "../../components/layout/Footer";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
 import Link from "next/link";
 
-// Modüller ve fiyatları
 const MODULES: any = {
   whatsapp: { label: "WhatsApp", rent: 20, buy: 150 },
   crm: { label: "CRM", rent: 15, buy: 100 },
@@ -15,29 +14,29 @@ const MODULES: any = {
 };
 
 export default function PackageDetail() {
-  // Varsayılan seçili modüller
   const [selectedKeys, setSelectedKeys] = useState<string[]>([
     "whatsapp",
     "crm",
     "followup",
   ]);
 
-  // Fiyat hesaplama
-  const calculateTotal = () => {
-    let rent = 0;
-    let buy = 0;
+  const [monthly, setMonthly] = useState(0);
+  const [buy, setBuy] = useState(0);
+
+  // ✅ FİYATLARI HER DEĞİŞİMDE YENİDEN HESAPLA
+  useEffect(() => {
+    let m = 0;
+    let b = 0;
 
     selectedKeys.forEach((key) => {
-      rent += MODULES[key].rent;
-      buy += MODULES[key].buy;
+      m += MODULES[key].rent;
+      b += MODULES[key].buy;
     });
 
-    return { rent, buy };
-  };
+    setMonthly(m);
+    setBuy(b);
+  }, [selectedKeys]);
 
-  const totals = calculateTotal();
-
-  // Modül ekle / çıkar
   const toggleModule = (key: string) => {
     if (selectedKeys.includes(key)) {
       if (selectedKeys.length > 1) {
@@ -53,143 +52,68 @@ export default function PackageDetail() {
       <Navbar />
 
       <main className="mx-auto max-w-5xl px-4 py-12">
-        <Link
-          href="/packages"
-          className="text-cyan-400 text-sm hover:underline mb-6 inline-block"
-        >
+        <Link href="/packages" className="text-cyan-400 text-sm">
           ← Back to Marketplace
         </Link>
 
-        <div className="grid gap-8 md:grid-cols-3">
-          {/* SOL */}
+        <div className="grid gap-8 md:grid-cols-3 mt-6">
           <div className="md:col-span-2 space-y-6">
-            <section>
-              <h1 className="text-4xl font-bold mb-2">
-                Package Configuration
-              </h1>
-              <p className="text-white/60">
-                Customize your automation by adding or removing modules.
-              </p>
-            </section>
+            <h1 className="text-4xl font-bold">
+              Package Configuration
+            </h1>
 
             <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-4">
-                Included Modules
-              </h3>
-
-              <div className="space-y-3">
-                {Object.keys(MODULES).map((key) => (
-                  <div
-                    key={key}
-                    onClick={() => toggleModule(key)}
-                    className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer ${
-                      selectedKeys.includes(key)
-                        ? "border-cyan-500/50 bg-cyan-500/5"
-                        : "border-white/10 bg-white/5 opacity-50"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`h-5 w-5 rounded-md border flex items-center justify-center ${
-                          selectedKeys.includes(key)
-                            ? "bg-cyan-500 border-cyan-500"
-                            : "border-white/20"
-                        }`}
-                      >
-                        {selectedKeys.includes(key) && (
-                          <span className="text-[10px] text-black font-bold">
-                            ✓
-                          </span>
-                        )}
-                      </div>
-                      <span className="font-medium">
-                        {MODULES[key].label} Agent
-                      </span>
-                    </div>
-
-                    <div className="text-sm text-white/40">
-                      +${MODULES[key].rent}/mo
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-2">
-                How the 2‑Day Demo works
-              </h3>
-              <p className="text-sm text-white/60">
-                You get 48 hours of full access. After that, the automation
-                pauses unless you subscribe or purchase.
-              </p>
-            </Card>
-          </div>
-
-          {/* SAĞ */}
-          <div className="space-y-6">
-            <Card className="p-6 sticky top-24 border-cyan-500/20">
-              <h3 className="text-lg font-bold mb-4">Order Summary</h3>
-
-              <div className="space-y-2 mb-6">
-                {selectedKeys.map((key) => (
-                  <div
-                    key={key}
-                    className="flex justify-between text-sm"
-                  >
-                    <span className="text-white/60">
-                      {MODULES[key].label} Agent
-                    </span>
-                    <span>${MODULES[key].rent}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t border-white/10 pt-4 space-y-4">
-                <div className="flex justify-between items-end">
-                  <span className="text-sm text-white/60">
-                    Monthly Rent
-                  </span>
-                  <span className="text-2xl font-bold text-cyan-400">
-                    ${totals.rent}/mo
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-end">
-                  <span className="text-sm text-white/60">
-                    One‑time Buy
-                  </span>
-                  <span className="text-xl font-bold">
-                    ${totals.buy}
-                  </span>
-                </div>
-              </div>
-
-              {/* ✅ BURASI EN KRİTİK YER */}
-              <div className="mt-8 space-y-3">
-                <Button
-                  className="w-full"
-                  size="lg"
-                  onClick={() => {
-                    localStorage.setItem(
-                      "checkout_data",
-                      JSON.stringify({
-                        monthly: totals.rent,
-                        buy: totals.buy,
-                      })
-                    );
-                    window.location.href = "/checkout";
-                  }}
+              {Object.keys(MODULES).map((key) => (
+                <div
+                  key={key}
+                  onClick={() => toggleModule(key)}
+                  className={`p-4 mb-3 rounded-xl border cursor-pointer ${
+                    selectedKeys.includes(key)
+                      ? "border-cyan-500 bg-cyan-500/10"
+                      : "border-white/10 bg-white/5"
+                  }`}
                 >
-                  Start 2‑Day Free Demo
-                </Button>
-
-                <p className="text-[10px] text-center text-white/40">
-                  No credit card required
-                </p>
-              </div>
+                  {MODULES[key].label} (+${MODULES[key].rent}/mo)
+                </div>
+              ))}
             </Card>
           </div>
+
+          <Card className="p-6">
+            <h3 className="text-lg font-bold mb-4">
+              Order Summary
+            </h3>
+
+            <div className="mb-4">
+              Monthly Rent:
+              <div className="text-2xl text-cyan-400 font-bold">
+                ${monthly}/mo
+              </div>
+            </div>
+
+            <div className="mb-6">
+              One-time Buy:
+              <div className="text-xl font-bold">
+                ${buy}
+              </div>
+            </div>
+
+            <Button
+              className="w-full"
+              onClick={() => {
+                localStorage.setItem(
+                  "checkout_data",
+                  JSON.stringify({
+                    monthly,
+                    buy,
+                  })
+                );
+                window.location.href = "/checkout";
+              }}
+            >
+              Start 2-Day Free Demo
+            </Button>
+          </Card>
         </div>
       </main>
 
@@ -197,4 +121,3 @@ export default function PackageDetail() {
     </div>
   );
 }
-
