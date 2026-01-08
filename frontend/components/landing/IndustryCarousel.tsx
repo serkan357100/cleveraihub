@@ -12,17 +12,24 @@ type Pack = {
 
 const PACKS: Pack[] = [
   { industry: "Real Estate", desc: "Lead → WhatsApp follow‑up → appointment.", demo: "2‑Day Demo", rent: "$59/mo", buy: "$399", modules: ["WhatsApp","CRM","Lead","Appointments"], badge: "Top Seller" },
-  { industry: "Accounting", desc: "Onboarding + document reminders.", demo: "2‑Day Demo", rent: "$49/mo", buy: "$349", modules: ["WhatsApp","CRM","Follow‑up"], badge: "Quick Setup" },
-  { industry: "Restaurant", desc: "Reservations + confirmations.", demo: "2‑Day Demo", rent: "$59/mo", buy: "$399", modules: ["WhatsApp","Appointments"], badge: "High ROI" },
-  { industry: "Hotel", desc: "Booking inquiries + guest follow‑ups.", demo: "2‑Day Demo", rent: "$79/mo", buy: "$499", modules: ["WhatsApp","CRM","Follow‑up"] },
-  { industry: "Dental Clinic", desc: "Reminders + reactivation.", demo: "2‑Day Demo", rent: "$69/mo", buy: "$449", modules: ["WhatsApp","CRM","Appointments"] },
-  { industry: "Gym", desc: "Trial leads + retention follow‑ups.", demo: "2‑Day Demo", rent: "$49/mo", buy: "$349", modules: ["WhatsApp","CRM","Follow‑up"] },
-  { industry: "Salon", desc: "Bookings + no‑show prevention.", demo: "2‑Day Demo", rent: "$49/mo", buy: "$349", modules: ["WhatsApp","Appointments"] },
+  { industry: "Dental Clinic", desc: "Reminders + reactivation campaigns.", demo: "2‑Day Demo", rent: "$69/mo", buy: "$449", modules: ["WhatsApp","CRM","Appointments"], badge: "High ROI" },
+  { industry: "Medical Clinic", desc: "Patient intake + follow‑ups.", demo: "2‑Day Demo", rent: "$79/mo", buy: "$499", modules: ["WhatsApp","CRM","Follow‑up"] },
   { industry: "Law Firm", desc: "Intake + case follow‑ups.", demo: "2‑Day Demo", rent: "$79/mo", buy: "$499", modules: ["WhatsApp","CRM","Follow‑up"] },
+  { industry: "Accounting", desc: "Onboarding + document reminders.", demo: "2‑Day Demo", rent: "$49/mo", buy: "$349", modules: ["WhatsApp","CRM","Follow‑up"], badge: "Quick Setup" },
+  { industry: "Insurance Agency", desc: "Policy renewals + lead nurturing.", demo: "2‑Day Demo", rent: "$59/mo", buy: "$399", modules: ["WhatsApp","CRM","Lead","Follow‑up"] },
+  { industry: "Marketing Agency", desc: "Client onboarding + project updates.", demo: "2‑Day Demo", rent: "$69/mo", buy: "$449", modules: ["WhatsApp","CRM","Follow‑up"] },
+  { industry: "E‑commerce Store", desc: "Order updates + abandoned cart recovery.", demo: "2‑Day Demo", rent: "$49/mo", buy: "$349", modules: ["WhatsApp","CRM","Follow‑up"], badge: "Best Value" },
+  { industry: "Restaurant", desc: "Reservations + confirmations.", demo: "2‑Day Demo", rent: "$59/mo", buy: "$399", modules: ["WhatsApp","Appointments"] },
+  { industry: "Hotel", desc: "Booking inquiries + guest follow‑ups.", demo: "2‑Day Demo", rent: "$79/mo", buy: "$499", modules: ["WhatsApp","CRM","Follow‑up"] },
+  { industry: "Gym / Fitness", desc: "Trial leads + retention follow‑ups.", demo: "2‑Day Demo", rent: "$49/mo", buy: "$349", modules: ["WhatsApp","CRM","Follow‑up"] },
+  { industry: "Salon / Barbershop", desc: "Bookings + no‑show prevention.", demo: "2‑Day Demo", rent: "$49/mo", buy: "$349", modules: ["WhatsApp","Appointments"] },
+  { industry: "Auto Repair", desc: "Service reminders + upsell campaigns.", demo: "2‑Day Demo", rent: "$59/mo", buy: "$399", modules: ["WhatsApp","CRM","Follow‑up"] },
+  { industry: "Home Services", desc: "Job scheduling + follow‑ups.", demo: "2‑Day Demo", rent: "$59/mo", buy: "$399", modules: ["WhatsApp","CRM","Appointments"] },
+  { industry: "Education / Coaching", desc: "Student onboarding + engagement.", demo: "2‑Day Demo", rent: "$69/mo", buy: "$449", modules: ["WhatsApp","CRM","Follow‑up"] },
+  { industry: "HR / Recruitment", desc: "Candidate tracking + interview scheduling.", demo: "2‑Day Demo", rent: "$79/mo", buy: "$499", modules: ["WhatsApp","CRM","Appointments"] },
 ];
 
 function Row({ reverse = false }: { reverse?: boolean }) {
-  // akıcı görünmesi için listeyi 2 kere yan yana koyuyoruz
   const items = [...PACKS, ...PACKS];
 
   return (
@@ -77,7 +84,6 @@ function Row({ reverse = false }: { reverse?: boolean }) {
         ))}
       </div>
 
-      {/* kenarlarda fade efekti */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#070B14] to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#070B14] to-transparent" />
     </div>
