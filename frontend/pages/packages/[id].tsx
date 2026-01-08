@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/router";
 import Navbar from "../../components/layout/Navbar";
 import Footer from "../../components/layout/Footer";
 import Card from "../../components/ui/Card";
@@ -14,6 +15,9 @@ const MODULES: Record<string, { label: string; rent: number; buy: number }> = {
 };
 
 export default function PackageDetail() {
+  const router = useRouter();
+  const { id } = router.query;
+
   const [selectedKeys, setSelectedKeys] = useState<string[]>([
     "whatsapp",
     "crm",
@@ -39,6 +43,9 @@ export default function PackageDetail() {
   };
 
   const selectedLabels = selectedKeys.map((k) => MODULES[k].label);
+
+  // ✅ PAKET ADI DİNAMİK
+  const packageName = id ? `${id} Otomasyonu` : "Custom Demo Automation";
 
   return (
     <div className="min-h-screen bg-[#070B14] text-white">
@@ -128,7 +135,7 @@ export default function PackageDetail() {
                     localStorage.setItem(
                       "checkout_data",
                       JSON.stringify({
-                        packageName: "Custom Demo Automation",
+                        packageName: packageName, // ✅ DİNAMİK PAKET ADI
                         moduleLabels: selectedLabels,
                         monthly: totals.monthly,
                         buy: totals.buy,
@@ -138,15 +145,3 @@ export default function PackageDetail() {
                   }}
                 >
                   Start 2‑Day Free Demo
-                </Button>
-                <p className="text-[10px] text-center text-white/40">No credit card required</p>
-              </div>
-            </Card>
-          </div>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
-  );
-}
