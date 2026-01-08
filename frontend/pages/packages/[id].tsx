@@ -1,48 +1,47 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Navbar from "../../components/layout/Navbar";
 import Footer from "../../components/layout/Footer";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
 import Link from "next/link";
 
-// Örnek Modül Fiyatları (Mantık için)
-const MODULE_PRICES: any = {
-  "WhatsApp": { rent: 20, buy: 150 },
-  "CRM": { rent: 15, buy: 100 },
-  "Lead": { rent: 10, buy: 70 },
-  "Appointments": { rent: 14, buy: 80 },
-  "Follow‑up": { rent: 10, buy: 50 },
+// Modül listesi ve fiyatları
+const MODULES: any = {
+  whatsapp: { label: "WhatsApp", rent: 20, buy: 150 },
+  crm: { label: "CRM", rent: 15, buy: 100 },
+  lead: { label: "Lead", rent: 10, buy: 70 },
+  appointments: { label: "Appointments", rent: 14, buy: 80 },
+  followup: { label: "Follow-up", rent: 10, buy: 50 },
 };
 
 export default function PackageDetail() {
   const router = useRouter();
-  const { id } = router.query;
+  
+  // Başlangıçta seçili gelen modüller
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(["whatsapp", "crm", "followup"]);
 
-  // Şimdilik demo veri (Gerçekte ID'ye göre API'den gelecek)
-  const [selectedModules, setSelectedModules] = useState<string[]>(["WhatsApp", "CRM", "Follow‑up"]);
-  const [basePrice, setBasePrice] = useState({ rent: 49, buy: 349 });
-
-  // Fiyatı dinamik hesapla
+  // Fiyat hesaplama fonksiyonu
   const calculateTotal = () => {
     let rent = 0;
     let buy = 0;
-    selectedModules.forEach(m => {
-      rent += MODULE_PRICES[m]?.rent || 0;
-      buy += MODULE_PRICES[m]?.buy || 0;
+    selectedKeys.forEach((key) => {
+      rent += MODULES[key].rent;
+      buy += MODULES[key].buy;
     });
     return { rent, buy };
   };
 
   const totals = calculateTotal();
 
-  const toggleModule = (mod: string) => {
-    if (selectedModules.includes(mod)) {
-      if (selectedModules.length > 1) {
-        setSelectedModules(selectedModules.filter(m => m !== mod));
+  // Modül seçme/çıkarma fonksiyonu
+  const toggleModule = (key: string) => {
+    if (selectedKeys.includes(key)) {
+      if (selectedKeys.length > 1) {
+        setSelectedKeys(selectedKeys.filter((k) => k !== key));
       }
     } else {
-      setSelectedModules([...selectedModules, mod]);
+      setSelectedKeys([...selectedKeys, key]);
     }
   };
 
@@ -56,7 +55,6 @@ export default function PackageDetail() {
         </Link>
 
         <div className="grid gap-8 md:grid-cols-3">
-          {/* SOL KOLON: Paket Detayları ve Modüller */}
           <div className="md:col-span-2 space-y-6">
             <section>
               <h1 className="text-4xl font-bold mb-2">Package Configuration</h1>
@@ -66,24 +64,24 @@ export default function PackageDetail() {
             <Card className="p-6">
               <h3 className="text-xl font-semibold mb-4">Included Modules</h3>
               <div className="space-y-3">
-                {Object.keys(MODULE_PRICES).map((mod) => (
+                {Object.keys(MODULES).map((key) => (
                   <div 
-                    key={mod}
-                    onClick={() => toggleModule(mod)}
+                    key={key}
+                    onClick={() => toggleModule(key)}
                     className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition ${
-                      selectedModules.includes(mod) 
+                      selectedKeys.includes(key) 
                       ? "border-cyan-500/50 bg-cyan-500/5" 
                       : "border-white/10 bg-white/5 opacity-50"
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`h-5 w-5 rounded-md border flex items-center justify-center ${selectedModules.includes(mod) ? "bg-cyan-500 border-cyan-500" : "border-white/20"}`}>
-                        {selectedModules.includes(mod) && <span className="text-[10px] text-black font-bold">✓</span>}
+                      <div className={`h-5 w-5 rounded-md border flex items-center justify-center ${selectedKeys.includes(key) ? "bg-cyan-500 border-cyan-500" : "border-white/20"}`}>
+                        {selectedKeys.includes(key) && <span className="text-[10px] text-black font-bold">✓</span>}
                       </div>
-                      <span className="font-medium">{mod} Agent</span>
+                      <span className="font-medium">{MODULES[key].label} Agent</span>
                     </div>
                     <div className="text-sm text-white/40">
-                      +${MODULE_PRICES[mod].rent}/mo
+                      +${MODULES[key].rent}/mo
                     </div>
                   </div>
                 ))}
@@ -94,22 +92,20 @@ export default function PackageDetail() {
               <h3 className="text-xl font-semibold mb-2">How the 2-Day Demo works</h3>
               <p className="text-sm text-white/60 leading-relaxed">
                 Once you start the demo, you will have 48 hours of full access to all selected modules. 
-                You can connect your WhatsApp number and test the CRM integration immediately. 
                 After 48 hours, the system will pause unless a subscription or purchase is made.
               </p>
             </Card>
           </div>
 
-          {/* SAĞ KOLON: Fiyatlandırma ve Özet */}
           <div className="space-y-6">
             <Card className="p-6 sticky top-24 border-cyan-500/20 shadow-[0_0_30px_-10px_rgba(34,211,238,0.2)]">
               <h3 className="text-lg font-bold mb-4">Order Summary</h3>
               
               <div className="space-y-2 mb-6">
-                {selectedModules.map(m => (
-                  <div key={m} className="flex justify-between text-sm">
-                    <span className="text-white/60">{m} Agent</span>
-                    <span>${MODULE_PRICES[m].rent}</span>
+                {selectedKeys.map(key => (
+                  <div key={key} className="flex justify-between text-sm">
+                    <span className="text-white/60">{MODULES[key].label} Agent</span>
+                    <span>${MODULES[key].rent}</span>
                   </div>
                 ))}
               </div>
@@ -140,7 +136,6 @@ export default function PackageDetail() {
     </div>
   );
 }
-
 
 
 
