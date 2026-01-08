@@ -137,7 +137,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between gap-4 mb-4">
             <h2 className="text-xl font-bold">Your Automations</h2>
             <div className="text-xs text-white/40">
-              Tip: Trial ends are shown as the “next date” until you subscribe.
+              Tip: Trial ends are shown as the "next date" until you subscribe.
             </div>
           </div>
 
@@ -188,88 +188,3 @@ export default function Dashboard() {
                           <span className="text-white/50">Monthly</span>
                           <span className="font-semibold text-cyan-300">${a.monthly}/mo</span>
                         </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-white/50">Buy</span>
-                          <span className="font-semibold">${a.buy}</span>
-                        </div>
-
-                        <div className="mt-3 rounded-xl border border-white/10 bg-black/20 p-3">
-                          {isTrial ? (
-                            <>
-                              <div className="text-xs text-white/40 uppercase">Trial ends in</div>
-                              <div className="text-lg font-mono font-bold text-cyan-300">
-                                {formatTimeLeft(trialLeftMs)}
-                              </div>
-                              <div className="text-xs text-white/50">
-                                Ends at: {formatDate(a.trialEndsAt)}
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <div className="text-xs text-white/40 uppercase">Next billing</div>
-                              <div className="text-sm text-white/70">
-                                {a.nextBillingAt ? formatDate(a.nextBillingAt) : "—"}
-                              </div>
-                            </>
-                          )}
-                        </div>
-
-                        <div className="mt-3 space-y-2">
-                          <div className="text-xs text-white/40 uppercase">WhatsApp Connection</div>
-                          {a.whatsappNumber ? (
-                            <div className="text-sm text-green-300">
-                              Connected: <span className="text-white/70">{a.whatsappNumber}</span>
-                            </div>
-                          ) : (
-                            <div className="flex gap-2">
-                              <input
-                                className="flex-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/30"
-                                placeholder="+1 234 567 8900"
-                                value={waInputs[a.id] || ""}
-                                onChange={(e) => setWaInputs({ ...waInputs, [a.id]: e.target.value })}
-                              />
-                              <Button onClick={() => connectWhatsApp(a.id)}>Connect</Button>
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="mt-4 flex gap-2">
-                          {a.status !== "paused" ? (
-                            <Button variant="secondary" className="flex-1" onClick={() => setStatus(a.id, "paused")}>
-                              Pause
-                            </Button>
-                          ) : (
-                            <Button className="flex-1" onClick={() => setStatus(a.id, "trial")}>
-                              Resume
-                            </Button>
-                          )}
-
-                          <Button
-                            className="flex-1"
-                            onClick={() => {
-                              // MVP: "Subscribe" tıklanınca trial -> active yapıyoruz (gerçekte ödeme olacak)
-                              const next = automations.map((x) =>
-                                x.id === a.id
-                                  ? { ...x, status: "active", nextBillingAt: Date.now() + 30 * 24 * 60 * 60 * 1000 }
-                                  : x
-                              );
-                              saveAutomations(next);
-                            }}
-                          >
-                            Subscribe
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </Card>
-      </main>
-
-      <Footer />
-    </div>
-  );
-}
