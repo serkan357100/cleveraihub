@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import Navbar from "../../components/layout/Navbar";
 import Footer from "../../components/layout/Footer";
@@ -36,7 +36,8 @@ export default function PackageDetail() {
 
   const toggleModule = (key: string) => {
     if (selectedKeys.includes(key)) {
-      if (selectedKeys.length > 1) setSelectedKeys(selectedKeys.filter((k) => k !== key));
+      if (selectedKeys.length > 1)
+        setSelectedKeys(selectedKeys.filter((k) => k !== key));
     } else {
       setSelectedKeys([...selectedKeys, key]);
     }
@@ -44,7 +45,6 @@ export default function PackageDetail() {
 
   const selectedLabels = selectedKeys.map((k) => MODULES[k].label);
 
-  // ✅ PAKET ADI DİNAMİK
   const packageName = id ? `${id} Otomasyonu` : "Custom Demo Automation";
 
   return (
@@ -52,7 +52,10 @@ export default function PackageDetail() {
       <Navbar />
 
       <main className="mx-auto max-w-5xl px-4 py-12">
-        <Link href="/packages" className="text-cyan-400 text-sm hover:underline mb-6 inline-block">
+        <Link
+          href="/packages"
+          className="text-cyan-400 text-sm hover:underline mb-6 inline-block"
+        >
           ← Back to Marketplace
         </Link>
 
@@ -60,7 +63,9 @@ export default function PackageDetail() {
           <div className="md:col-span-2 space-y-6">
             <section>
               <h1 className="text-4xl font-bold mb-2">Package Configuration</h1>
-              <p className="text-white/60">Add / remove modules — price updates instantly.</p>
+              <p className="text-white/60">
+                Add / remove modules — price updates instantly.
+              </p>
             </section>
 
             <Card className="p-6">
@@ -79,14 +84,22 @@ export default function PackageDetail() {
                     <div className="flex items-center gap-3">
                       <div
                         className={`h-5 w-5 rounded-md border flex items-center justify-center ${
-                          selectedKeys.includes(key) ? "bg-cyan-500 border-cyan-500" : "border-white/20"
+                          selectedKeys.includes(key)
+                            ? "bg-cyan-500 border-cyan-500"
+                            : "border-white/20"
                         }`}
                       >
-                        {selectedKeys.includes(key) && <span className="text-[10px] text-black font-bold">✓</span>}
+                        {selectedKeys.includes(key) && (
+                          <span className="text-[10px] text-black font-bold">
+                            ✓
+                          </span>
+                        )}
                       </div>
                       <span className="font-medium">{MODULES[key].label} Agent</span>
                     </div>
-                    <div className="text-sm text-white/40">+${MODULES[key].rent}/mo</div>
+                    <div className="text-sm text-white/40">
+                      +${MODULES[key].rent}/mo
+                    </div>
                   </div>
                 ))}
               </div>
@@ -95,7 +108,8 @@ export default function PackageDetail() {
             <Card className="p-6">
               <h3 className="text-xl font-semibold mb-2">Demo info</h3>
               <p className="text-sm text-white/60">
-                Start a 48-hour trial. After trial ends, automation pauses unless you subscribe or purchase.
+                Start a 48-hour trial. After trial ends, automation pauses unless
+                you subscribe or purchase.
               </p>
             </Card>
           </div>
@@ -135,7 +149,7 @@ export default function PackageDetail() {
                     localStorage.setItem(
                       "checkout_data",
                       JSON.stringify({
-                        packageName: packageName, // ✅ DİNAMİK PAKET ADI
+                        packageName: packageName,
                         moduleLabels: selectedLabels,
                         monthly: totals.monthly,
                         buy: totals.buy,
@@ -145,3 +159,17 @@ export default function PackageDetail() {
                   }}
                 >
                   Start 2‑Day Free Demo
+                </Button>
+                <p className="text-[10px] text-center text-white/40">
+                  No credit card required
+                </p>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
