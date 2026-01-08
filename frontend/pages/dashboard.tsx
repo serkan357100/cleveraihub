@@ -36,13 +36,11 @@ export default function Dashboard() {
   const [now, setNow] = useState(Date.now());
   const [waInputs, setWaInputs] = useState<Record<string, string>>({});
 
-  // her saniye "now" güncelle → trial kalan süre canlı görünsün
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(t);
   }, []);
 
-  // localStorage'dan otomasyonları oku
   useEffect(() => {
     const raw = localStorage.getItem("clever_active_automations");
     if (!raw) {
@@ -70,8 +68,7 @@ export default function Dashboard() {
 
     const nextPayment = automations
       .map((a) => {
-        // trial ise "trial bitişi" önemli tarih
-        const ts = a.status === "trial" ? a.trialEndsAt : (a.nextBillingAt || 0);
+        const ts = a.status === "trial" ? a.trialEndsAt : a.nextBillingAt || 0;
         return ts;
       })
       .filter((t) => t > 0)
@@ -101,7 +98,9 @@ export default function Dashboard() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
             <h1 className="text-4xl font-bold mb-2">Management Panel</h1>
-            <p className="text-white/60">All your automations, billing dates, and connections in one place.</p>
+            <p className="text-white/60">
+              All your automations, billing dates, and connections in one place.
+            </p>
           </div>
 
           <Link href="/packages">
@@ -137,7 +136,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between gap-4 mb-4">
             <h2 className="text-xl font-bold">Your Automations</h2>
             <div className="text-xs text-white/40">
-              Tip: Trial ends are shown as the "next date" until you subscribe.
+              Trial ends are shown as the next date until you subscribe.
             </div>
           </div>
 
@@ -157,13 +156,15 @@ export default function Dashboard() {
                       <div>
                         <div className="flex items-center gap-3">
                           <div className="font-semibold text-white">{a.name}</div>
-                          <span className={`text-xs px-3 py-1 rounded-full border ${
-                            a.status === "active"
-                              ? "border-green-500/30 bg-green-500/10 text-green-300"
-                              : a.status === "trial"
-                                ? "border-cyan-500/30 bg-cyan-500/10 text-cyan-200"
-                                : "border-yellow-500/30 bg-yellow-500/10 text-yellow-200"
-                          }`}>
+                          <span
+                            className={`text-xs px-3 py-1 rounded-full border ${
+                              a.status === "active"
+                                ? "border-green-500/30 bg-green-500/10 text-green-300"
+                                : a.status === "trial"
+                                  ? "border-cyan-500/30 bg-cyan-500/10 text-cyan-200"
+                                  : "border-yellow-500/30 bg-yellow-500/10 text-yellow-200"
+                            }`}
+                          >
                             {a.status.toUpperCase()}
                           </span>
                         </div>
@@ -175,7 +176,10 @@ export default function Dashboard() {
                         {!!a.modules?.length && (
                           <div className="mt-3 flex flex-wrap gap-2">
                             {a.modules.map((m) => (
-                              <span key={m} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+                              <span
+                                key={m}
+                                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70"
+                              >
                                 {m}
                               </span>
                             ))}
@@ -188,3 +192,98 @@ export default function Dashboard() {
                           <span className="text-white/50">Monthly</span>
                           <span className="font-semibold text-cyan-300">${a.monthly}/mo</span>
                         </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-white/50">Buy</span>
+                          <span className="font-semibold">${a.buy}</span>
+                        </div>
+
+                        <div className="mt-3 rounded-xl border border-white/10 bg-black/20 p-3">
+                          {isTrial ? (
+                            <>
+                              <div className="text-xs text-white/40 uppercase">Trial ends in</div>
+                              <div className="text-lg font-mono font-bold text-cyan-300">
+                                {formatTimeLeft(trialLeftMs)}
+                              </div>
+                              <div className="text-xs text-white/50">
+                                Ends at: {formatDate(a.trialEndsAt)}
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="text-xs text-white/40 uppercase">Next billing</div>
+                              <div className="text-sm text-white/70">
+                                {a.nextBillingAt ? formatDate(a.nextBillingAt) : "—"}
+                              </div>
+                            </>
+                          )}
+                        </div>
+
+                        <div className="mt-3 space-y-2">
+                          <div className="text-xs text-white/40 uppercase">WhatsApp Connection</div>
+                          {a.whatsappNumber ? (
+                            <div className="text-sm text-green-300">
+                              Connected: <span className="text-white/70">{a.whatsappNumber}</span>
+                            </div>
+                          ) : (
+                            <div className="flex gap-2">
+                              <input
+                                className="flex-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/30"
+                                placeholder="+1 234 567 8900"
+                                value={waInputs[a.id] || ""}
+                                onChange={(e) =>
+                                  setWaInputs({ ...waInputs, [a.id]: e.target.value })
+                                }
+                              />
+                              <Button onClick={() => connectWhatsApp(a.id)}>Connect</Button>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="mt-4 flex gap-2">
+                          {a.status !== "paused" ? (
+                            <Button
+                              variant="secondary"
+                              className="flex-1"
+                              onClick={() => setStatus(a.id, "paused")}
+                            >
+                              Pause
+                            </Button>
+                          ) : (
+                            <Button className="flex-1" onClick={() => setStatus(a.id, "trial")}>
+                              Resume
+                            </Button>
+                          )}
+
+                          <Button
+                            className="flex-1"
+                            onClick={() => {
+                              const next: Automation[] = automations.map((x) =>
+                                x.id === a.id
+                                  ? {
+                                      ...x,
+                                      status: "active" as const,
+                                      nextBillingAt:
+                                        Date.now() + 30 * 24 * 60 * 60 * 1000,
+                                    }
+                                  : x
+                              );
+                              saveAutomations(next);
+                            }}
+                          >
+                            Subscribe
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </Card>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
