@@ -9,8 +9,8 @@ export async function getRecommendations(req: Request, res: Response) {
     }
 
     const aiResponse = await generateRecommendations(profession);
-    res.json(aiResponse);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.json(aiResponse);
+  } catch (err: any) {
+    return res.status(500).json({ error: err.message || 'Bir hata oluştu' });
   }
 }
