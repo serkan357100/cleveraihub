@@ -35,8 +35,8 @@ export default function LayeredChatHomepage() {
 
   return (
     <div className="relative h-screen bg-[#0D121F] text-white flex flex-col items-center overflow-hidden">
-      {/* Başlık ve açıklama: Tek satır ve birbirine çok yakın */}
-      <header className="h-[22vh] w-full max-w-7xl px-6 flex flex-col justify-center items-center text-center z-10">
+      {/* Başlık ve açıklama: Chat botun üstünde ve 7-10mm (yaklaşık -40px) yukarı taşındı */}
+      <header className="h-[22vh] w-full max-w-7xl px-6 flex flex-col justify-center items-center text-center z-10 -translate-y-10">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight whitespace-nowrap">
           Mesleğinize Özel <span className="text-cyan-400">Yapay Zeka Otomasyonları</span>
         </h1>
@@ -45,7 +45,7 @@ export default function LayeredChatHomepage() {
         </p>
       </header>
 
-      {/* Chat alanı: başlık bölümüne overlap, geniş ve dominant */}
+      {/* Chat alanı: Konumu ve yapısı değiştirilmedi */}
       <main
         className="absolute top-[15vh] w-[90vw] max-w-7xl bg-[#121827] rounded-3xl shadow-2xl flex flex-col"
         style={{ height: "70vh" }}
