@@ -26,10 +26,10 @@ export default function ProfessionAnalyzer() {
   };
 
   return (
-    <section className="mx-auto max-w-full px-2 sm:px-4 py-8">
-      <Card className="p-6 md:p-8 border border-gray-700 rounded-lg max-w-full w-full">
-        {/* ÜST KISIM: Başlık ve Yeni Metin */}
-        <div className="mb-6">
+    <section className="mx-auto max-w-full px-4 py-8">
+      <Card className="p-8 border border-gray-700 rounded-lg w-full max-w-full">
+        {/* Başlık ve açıklama */}
+        <div className="mb-6 max-w-4xl mx-auto">
           <h1 className="text-4xl font-extrabold text-white leading-tight">
             Mesleğinize Özel <span className="text-cyan-400">Yapay Zeka Otomasyonları</span>
           </h1>
@@ -41,19 +41,19 @@ export default function ProfessionAnalyzer() {
           </p>
         </div>
 
-        {/* AI KUTUSU: İÇİ BOMBOŞ, SADECE INPUT VE BUTON */}
-        <div className="rounded-3xl border border-white/10 bg-[#0D121F] p-8 shadow-lg w-full">
-          {/* Sonuç Alanı (Sadece sonuç geldiğinde görünür, başlangıçta bomboş) */}
+        {/* AI Konuşma Alanı */}
+        <div className="rounded-3xl border border-white/10 bg-[#0D121F] p-10 shadow-lg w-full max-w-5xl mx-auto">
+          {/* Sonuç alanı (varsa) */}
           {result && (
-            <div className="mb-6 overflow-y-auto max-h-[300px] prose prose-invert text-white/90">
+            <div className="mb-8 overflow-y-auto max-h-[400px] prose prose-invert text-white/90">
               <div dangerouslySetInnerHTML={{ __html: result.summary }} />
             </div>
           )}
 
-          {/* INPUT VE BUTON ALANI */}
-          <div className="flex gap-4">
+          {/* Input ve Buton */}
+          <div className="flex gap-6">
             <input
-              className="flex-1 rounded-xl border border-white/20 bg-black/40 px-5 py-4 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+              className="flex-1 rounded-xl border border-white/20 bg-black/40 px-6 py-5 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition text-lg"
               placeholder='Mesleğinizi buraya yazın...'
               value={profession}
               onChange={(e) => setProfession(e.target.value)}
@@ -62,7 +62,7 @@ export default function ProfessionAnalyzer() {
             <Button
               onClick={handleAnalyze}
               disabled={loading}
-              className="w-56 bg-cyan-500 hover:bg-cyan-400 text-black font-bold"
+              className="w-64 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-lg"
             >
               CleverAI Analiz Et
             </Button>
