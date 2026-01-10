@@ -1,93 +1,51 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Button from "../ui/Button";
 
-export default function CleverAIChatInterface() {
-  const [messages, setMessages] = useState([
-    { role: "ai", content: "Merhaba, ben CleverAI. Mesleğinizi yazın, sizin için en uygun otomasyon paketlerini saniyeler içinde hazırlayayım." }
-  ]);
-  const [input, setInput] = useState("");
-  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+export default function ProfessionAnalyzer() {
+  const [profession, setProfession] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Sohbeti otomatik aşağı kaydır
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const handleSend = () => {
-    if (!input.trim()) return;
-    
-    // Kullanıcı mesajını ekle
-    const userMsg = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMsg]);
-    setInput("");
-
-    // AI Yanıtı Simülasyonu (Burada API'ye bağlanacak)
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { 
-        role: "ai", 
-        content: `Anladım, bir ${input} için şu otomasyonları öneririm: WhatsApp Takip, CRM Entegrasyonu ve Randevu Sistemi. Aktif etmemi ister misiniz?` 
-      }]);
-    }, 1000);
+  const handleAnalyze = async () => {
+    if (!profession.trim()) return alert("Lütfen mesleğinizi yazın.");
+    setLoading(true);
+    try {
+      // API çağrısı burada olacak
+    } catch {
+      // Hata yönetimi
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    /* ANA DIŞ KUTU: EKRANI DÖRT YANDAN DOLDURUR, KENARDA ÇOK AZ BOŞLUK (p-2) */
-    <div className="fixed inset-0 bg-[#05070A] p-2 flex flex-col overflow-hidden">
-      
-      {/* SOHBET ALANI: TÜM EKRANI KAPLAYAN ANA ÇERÇEVE */}
-      <div className="flex-1 w-full bg-[#0D121F] border border-white/10 rounded-2xl flex flex-col relative overflow-hidden">
-        
-        {/* Üst Bilgi Çubuğu */}
-        <div className="w-full p-4 border-b border-white/5 bg-black/20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-3 h-3 bg-cyan-500 rounded-full animate-pulse"></div>
-            <span className="text-white font-bold tracking-wide">CleverAI Hub Asistanı</span>
-          </div>
-          <button className="text-white/50 hover:text-white text-sm">Geçmişi Temizle</button>
-        </div>
+    <div className="w-screen h-screen bg-[#0D121F] p-4 box-border flex items-center justify-center">
+      <div className="w-full max-w-5xl bg-[#121827] border border-white/20 rounded-2xl p-8">
+        <h1 className="text-4xl font-extrabold text-white mb-4">
+          Mesleğinize Özel <span className="text-cyan-400">Yapay Zeka Otomasyonları</span>
+        </h1>
+        <p className="text-white/80 mb-6">
+          Kod yazmaya ya da teknik kuruluma gerek yok. CleverAI ile dakikalar içinde otomasyonunuz hazır.
+        </p>
+        <p className="text-cyan-400 font-medium mb-8">
+          Özel Otomasyon Analizi Mesleğinizi yazın — "CleverAI Analiz Et" butonuna tıklayın.
+        </p>
 
-        {/* MESAJLARIN AKTIĞI ALAN */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
-          {messages.map((msg, index) => (
-            <div key={index} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-              <div className={`max-w-[80%] p-4 rounded-2xl text-lg ${
-                msg.role === "user" 
-                ? "bg-cyan-600 text-white rounded-tr-none" 
-                : "bg-white/5 border border-white/10 text-white/90 rounded-tl-none"
-              }`}>
-                {msg.content}
-              </div>
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
+        <div className="flex gap-4">
+          <input
+            className="flex-1 rounded-lg border border-white/20 bg-black/40 px-4 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+            placeholder="Mesleğinizi buraya yazın (Örn: Gayrimenkul Danışmanı)..."
+            value={profession}
+            onChange={(e) => setProfession(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAnalyze()}
+          />
+          <Button
+            onClick={handleAnalyze}
+            disabled={loading}
+            className="w-40 bg-cyan-500 hover:bg-cyan-400 text-black font-semibold"
+          >
+            CleverAI Analiz Et
+          </Button>
         </div>
-
-        {/* GİRİŞ ALANI: EN ALTTA SABİT */}
-        <div className="p-6 bg-black/20 border-t border-white/5">
-          <div className="max-w-5xl mx-auto flex gap-4 items-center bg-[#121827] border border-white/10 p-2 rounded-2xl shadow-2xl">
-            <input
-              className="flex-1 bg-transparent border-none px-4 py-3 text-white text-lg focus:outline-none placeholder:text-white/30"
-              placeholder="Mesleğinizi buraya yazın..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            />
-            <Button 
-              onClick={handleSend}
-              className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded-xl transition-all"
-            >
-              Gönder
-            </Button>
-          </div>
-          <p className="text-center text-white/20 text-xs mt-4">
-            CleverAI hata yapabilir. Önemli bilgileri kontrol edin.
-          </p>
-        </div>
-
       </div>
     </div>
   );
