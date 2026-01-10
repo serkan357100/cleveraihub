@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Button from "../ui/Button";
 
-export default function HomepageChat() {
+export default function OverlappingChatHomepage() {
   const [messages, setMessages] = useState([
     {
       role: "ai",
@@ -12,7 +12,6 @@ export default function HomepageChat() {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
-  // Scroll chat to bottom on new message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -23,7 +22,6 @@ export default function HomepageChat() {
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
 
-    // Simulate AI response (replace with real API call)
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
@@ -36,23 +34,26 @@ export default function HomepageChat() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-[#0D121F] text-white">
-      {/* TOP AREA: 28% height */}
-      <header className="flex-shrink-0 h-[28vh] p-6 flex flex-col justify-center max-w-5xl mx-auto">
-        <h1 className="text-4xl font-extrabold">
+    <div className="relative h-screen bg-[#0D121F] text-white flex flex-col items-center">
+      {/* Headline + Description: 22% height */}
+      <header className="h-[22vh] w-full max-w-7xl px-6 flex flex-col justify-center z-10">
+        <h1 className="text-4xl font-extrabold max-w-4xl leading-tight">
           Mesleğinize Özel{" "}
           <span className="text-cyan-400">Yapay Zeka Otomasyonları</span>
         </h1>
-        <p className="mt-3 text-white/80 text-lg max-w-3xl">
+        <p className="mt-3 text-white/80 max-w-3xl text-lg">
           Kod yazmaya ya da teknik kuruluma gerek yok. CleverAI ile dakikalar
           içinde otomasyonunuz hazır.
         </p>
       </header>
 
-      {/* BOTTOM AREA: 72% height, chat interface */}
-      <main className="flex-grow p-4 max-w-5xl mx-auto flex flex-col bg-[#121827] rounded-2xl shadow-lg">
+      {/* Chat container: overlaps upward into header */}
+      <main
+        className="absolute top-[15vh] w-[90vw] max-w-7xl bg-[#121827] rounded-3xl shadow-2xl flex flex-col"
+        style={{ height: "70vh" }}
+      >
         {/* Messages area */}
-        <div className="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar">
+        <div className="flex-grow overflow-y-auto p-6 space-y-4 custom-scrollbar">
           {messages.map((msg, idx) => (
             <div
               key={idx}
@@ -69,7 +70,7 @@ export default function HomepageChat() {
         </div>
 
         {/* Input area */}
-        <div className="mt-4 flex gap-4">
+        <div className="p-6 border-t border-white/10 flex gap-4">
           <input
             type="text"
             className="flex-grow rounded-xl bg-black/40 px-4 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition text-lg"
