@@ -26,159 +26,151 @@ export default function ProfessionAnalyzer() {
     }
   };
 
-  const quickTags = ["Emlakçı", "Kuaför", "Hukuk Bürosu", "Klinik", "Restoran"];
-
   return (
     <section className="mx-auto max-w-6xl px-4 pt-10 pb-6">
       <Card className="p-6 md:p-8">
-        {/* Başlık ve Sağ Bilgi Kutusu */}
-        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+        {/* Üst Kısım: Başlık ve Sağdaki Kutucuk */}
+        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between border-b border-white/5 pb-8">
           <div className="max-w-xl">
-            <h1 className="mt-2 text-3xl md:text-5xl font-extrabold text-white leading-tight">
+            <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">
               Mesleğinize Özel <span className="text-cyan-300">Yapay Zeka Otomasyonları</span>
             </h1>
-            <p className="mt-4 text-white/60">
+            <p className="mt-4 text-lg text-white/80">
               Kod yazmanıza veya teknik kurulumla uğraşmanıza gerek yok. CleverAI sayesinde dakikalar içinde otomasyon sisteminiz hazır.
             </p>
-
-            <p className="mt-3 text-sm text-white/50">
+            <p className="mt-4 text-sm text-cyan-400/80 font-medium">
               Mesleğinizi yazın — CleverAI analiz edip size özel otomasyon önerileri oluşturacak.
             </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <input
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/30 md:flex-1"
-                placeholder='Örneğin "Emlakçı", "Diş Hekimi", "Salon Sahibi"...'
-                value={profession}
-                onChange={(e) => setProfession(e.target.value)}
-              />
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-2 text-xs">
-              {quickTags.map((x) => (
-                <button
-                  key={x}
-                  onClick={() => setProfession(x)}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-white/80 hover:bg-white/10"
-                >
-                  {x}
-                </button>
-              ))}
-            </div>
           </div>
 
-          {/* Sağ kutu: Neler elde edeceksiniz? */}
           <div className="md:w-[420px]">
-            <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
-              <div className="text-white font-semibold">Neler elde edeceksiniz?</div>
-              <ul className="mt-3 space-y-2 text-sm text-white/70">
-                <li>• <strong>Daha Fazla Nakit:</strong> Potansiyel müşterileri satışa dönüştürme oranınızı artırın.</li>
-                <li>• <strong>Zaman Tasarrufu:</strong> Randevu ve takip işlerini otomatikleştirerek gününüzü geri alın.</li>
-                <li>• <strong>Azalan İş Yükü:</strong> Tekrarlayan görevler AI tarafından yönetilsin.</li>
-                <li>• <strong>Hızlı Aktivasyon:</strong> Teknik bilgi gerektirmeden dakikalar içinde çalışır hale gelin.</li>
+            <div className="rounded-2xl border border-white/10 bg-black/30 p-6 shadow-xl">
+              <div className="text-white font-bold text-lg border-b border-white/10 pb-2 mb-3">Neler elde edeceksiniz?</div>
+              <ul className="space-y-3 text-sm text-white/80">
+                <li className="flex gap-2">
+                  <span className="text-cyan-400">🚀</span>
+                  <span><strong>Daha Fazla Nakit:</strong> Potansiyel müşterileri satışa dönüştürme oranınızı artırın.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-cyan-400">🕒</span>
+                  <span><strong>Zaman Tasarrufu:</strong> Randevu ve takip işlerini otomatikleştirerek gününüzü geri alın.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-cyan-400">🤖</span>
+                  <span><strong>Azalan İş Yükü:</strong> Tekrarlayan görevler AI tarafından yönetilsin.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-cyan-400">⚡</span>
+                  <span><strong>Hızlı Aktivasyon:</strong> Teknik bilgi gerektirmeden dakikalar içinde çalışır hale gelin.</span>
+                </li>
               </ul>
-              <div className="mt-4 text-xs text-white/50">
-                Tipik kurulum süresi: <span className="text-white/70">3–10 dakika</span>
+              <div className="mt-4 pt-3 border-t border-white/5 text-xs text-white/50 flex justify-between">
+                <span>Tipik kurulum süresi:</span>
+                <span className="text-cyan-300 font-bold">3–10 dakika</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* BÜYÜK AI ALANI */}
-        <div className="mt-6">
-          <div className="rounded-2xl border border-white/10 bg-black/40 p-6 min-h-[260px] flex flex-col">
-            {/* İçerik: sonuç yoksa logo & boşluk, sonuç varsa scroll alan */}
-            {!result ? (
-              <div className="flex h-full flex-col items-center justify-center gap-4">
-                {/* Logo (varsa /logo.svg) */}
-                <div className="flex items-center justify-center">
-                  <img src="/logo.svg" alt="CleverAIHub" className="h-16 w-16 select-none opacity-90" />
-                </div>
+        {/* AI Etkileşim Alanı */}
+        <div className="mt-8">
+          <div className="rounded-3xl border border-white/10 bg-[#0D121F] p-8 min-h-[350px] flex flex-col shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 blur-[80px] pointer-events-none" />
 
-                <div className="text-center text-white/60 max-w-2xl">
-                  <div className="text-lg font-medium text-white/80">CleverAI ile otomasyon önerinizi görün</div>
-                  <div className="mt-2 text-sm">
-                    Mesleğinizi yazıp <span className="font-semibold text-cyan-300">Clever Analiz Et</span> butonuna tıkladığınızda,
-                    AI size özel otomasyon önerilerini ve gereken adımları gösterecek.
-                  </div>
+            {!result ? (
+              <div className="flex h-full flex-1 flex-col items-center justify-center text-center gap-6">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-cyan-400/20 blur-2xl rounded-full" />
+                  <img src="/logo.svg" alt="CleverAI" className="relative h-24 w-24 opacity-90" />
+                </div>
+                <div className="max-w-md">
+                  <h3 className="text-xl font-semibold text-white">CleverAI Analizine Hazır</h3>
+                  <p className="mt-2 text-white/50 text-sm">
+                    Aşağıdaki alana mesleğinizi yazın ve "Clever Analiz Et" butonuna basın. 
+                    Yapay zeka sizin için en karlı senaryoları burada listeleyecek.
+                  </p>
                 </div>
               </div>
             ) : (
-              <div className="flex h-full flex-col">
-                <div className="flex items-start justify-between">
-                  <div className="text-white font-semibold text-lg">{result.title || "Öneriler"}</div>
+              <div className="flex h-full flex-col flex-1">
+                <div className="flex items-center gap-3 mb-6 border-b border-white/10 pb-4">
+                  <img src="/logo.svg" alt="AI" className="h-10 w-10" />
+                  <div>
+                    <div className="text-white font-bold text-xl">{result.title || "Özel Otomasyon Analizi"}</div>
+                    <div className="text-cyan-400 text-xs font-medium">CleverAI Tarafından Oluşturuldu</div>
+                  </div>
                   <button
                     onClick={() => setResult(null)}
-                    className="text-xs text-white/60 hover:text-white"
+                    className="ml-auto rounded-lg bg-white/5 px-3 py-1 text-xs text-white/60 hover:bg-white/10 hover:text-white transition-all"
                   >
-                    Sıfırla
+                    Yeni Analiz
                   </button>
                 </div>
 
-                <div className="mt-3 flex-1 overflow-auto pr-2">
-                  {/* AI'dan gelen ham metni veya yapılandırılmış sonucu göster */}
-                  <div className="prose prose-invert max-w-none text-sm text-white/80">
-                    {/* Eger API ham structure farklıysa bunu adapte edebilirsin */}
+                <div className="flex-1 overflow-auto pr-2 custom-scrollbar">
+                  <div className="prose prose-invert max-w-none text-base text-white/90 leading-relaxed">
                     {result?.summary ? (
                       <div dangerouslySetInnerHTML={{ __html: result.summary }} />
                     ) : (
-                      <pre className="whitespace-pre-wrap">{JSON.stringify(result, null, 2)}</pre>
+                      <div className="flex gap-3">
+                         <span className="text-cyan-400 font-bold">AI:</span>
+                         <p>{JSON.stringify(result)}</p>
+                      </div>
                     )}
+                  </div>
+                  
+                  <div className="mt-8 grid gap-4 md:grid-cols-2">
+                    <div className="rounded-2xl border border-white/5 bg-white/5 p-5">
+                      <div className="flex items-center gap-2 text-cyan-300 font-bold mb-3">
+                        <span>⚙️</span> Önerilen Modüller
+                      </div>
+                      <div className="space-y-2 text-sm text-white/70">
+                        {Array.isArray(result.automations) ? result.automations.map((a: any, i: number) => (
+                          <div key={i} className="flex gap-2"><span>•</span> {a}</div>
+                        )) : "Modül bulunamadı."}
+                      </div>
+                    </div>
+                    <div className="rounded-2xl border border-white/5 bg-white/5 p-5">
+                      <div className="flex items-center gap-2 text-orange-300 font-bold mb-3">
+                        <span>📝</span> Gereksinimler
+                      </div>
+                      <div className="space-y-2 text-sm text-white/70">
+                        {Array.isArray(result.missingInfoNeeded) ? result.missingInfoNeeded.map((m: any, i: number) => (
+                          <div key={i} className="flex gap-2"><span>•</span> {m}</div>
+                        )) : "Ek bilgi gerekmiyor."}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-4 grid gap-3 md:grid-cols-2">
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-                    <div className="text-sm font-semibold text-white">Otomasyonlar</div>
-                    <div className="mt-2 space-y-1 text-sm text-white/70">
-                      {Array.isArray(result.automations) && result.automations.length > 0 ? (
-                        result.automations.map((a: string, i: number) => <div key={i}>• {a}</div>)
-                      ) : (
-                        <div className="text-white/50">Öğe yok.</div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-                    <div className="text-sm font-semibold text-white">Sizden gerekenler</div>
-                    <div className="mt-2 space-y-1 text-sm text-white/70">
-                      {Array.isArray(result.missingInfoNeeded) && result.missingInfoNeeded.length > 0 ? (
-                        result.missingInfoNeeded.map((m: string, i: number) => <div key={i}>• {m}</div>)
-                      ) : (
-                        <div className="text-white/50">Öğe yok.</div>
-                      )}
-                    </div>
-                  </div>
+                <div className="mt-6 pt-4 border-t border-white/10 flex gap-4">
+                   <Link href="/packages" className="flex-1">
+                      <Button className="w-full py-4 text-lg shadow-lg shadow-cyan-500/20">Hemen Paketi Başlat</Button>
+                   </Link>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Input ve Buton (AI alanının altında sabit) */}
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-            <input
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/30"
-              placeholder='Mesleğinizi yazın: "Emlakçı", "Diş Hekimi"...'
-              value={profession}
-              onChange={(e) => setProfession(e.target.value)}
-            />
-            <Button onClick={handleAnalyze} className="sm:w-[220px]">
-              {loading ? "Analiz ediliyor..." : "Clever Analiz Et"}
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row">
+            <div className="relative flex-1">
+              <input
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-6 py-5 text-white text-lg placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all"
+                placeholder='Mesleğinizi buraya yazın (Örn: Gayrimenkul Danışmanı)...'
+                value={profession}
+                onChange={(e) => setProfession(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleAnalyze()}
+              />
+            </div>
+            <Button 
+              onClick={handleAnalyze} 
+              className="sm:w-[260px] py-5 text-xl font-bold bg-cyan-500 hover:bg-cyan-400 text-black transition-all"
+              disabled={loading}
+            >
+              {loading ? "Analiz Ediliyor..." : "Clever Analiz Et"}
             </Button>
           </div>
         </div>
-
-        {/* Alt: sonuç varsa paket başlat butonları - (köprü) */}
-        {result && (
-          <div className="mt-4 flex gap-2">
-            <Link href="/packages/1" className="flex-1">
-              <Button className="w-full">Paket Başlat</Button>
-            </Link>
-            <Link href="/packages">
-              <Button variant="secondary">Pazaryeri</Button>
-            </Link>
-          </div>
-        )}
       </Card>
     </section>
   );
