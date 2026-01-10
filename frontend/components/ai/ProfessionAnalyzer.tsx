@@ -1,117 +1,94 @@
-import React from "react";
+import { useState, useEffect, useRef } from "react";
 import Button from "../ui/Button";
 
-export default function FullHeroWithPackages() {
+export default function CleverAIChatInterface() {
+  const [messages, setMessages] = useState([
+    { role: "ai", content: "Merhaba, ben CleverAI. Mesleğinizi yazın, sizin için en uygun otomasyon paketlerini saniyeler içinde hazırlayayım." }
+  ]);
+  const [input, setInput] = useState("");
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
+  // Sohbeti otomatik aşağı kaydır
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+    
+    // Kullanıcı mesajını ekle
+    const userMsg = { role: "user", content: input };
+    setMessages((prev) => [...prev, userMsg]);
+    setInput("");
+
+    // AI Yanıtı Simülasyonu (Burada API'ye bağlanacak)
+    setTimeout(() => {
+      setMessages((prev) => [...prev, { 
+        role: "ai", 
+        content: `Anladım, bir ${input} için şu otomasyonları öneririm: WhatsApp Takip, CRM Entegrasyonu ve Randevu Sistemi. Aktif etmemi ister misiniz?` 
+      }]);
+    }, 1000);
+  };
+
   return (
-    <div className="min-h-screen w-screen bg-[#0D121F] text-white">
-      {/* ---------- DIŞ KUTU (FULL-BLEED HERO) ---------- */}
-      <header className="w-full box-border p-3"> {/* p-3 ile dört yandan çok az boşluk */}
-        <div className="w-full bg-[#0F1720] border border-white/10 rounded-2xl p-8 md:p-10 shadow-lg">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight">
-            Mesleğinize Özel <span className="text-cyan-400">Yapay Zeka Otomasyonları</span>
-          </h1>
-
-          <p className="mt-4 text-white/80 max-w-3xl">
-            Kod yazmaya ya da teknik kuruluma gerek yok. CleverAI ile dakikalar içinde otomasyonunuz hazır.
-          </p>
-
-          {/* Tek satır metin (isteğine göre) */}
-          <p className="mt-4 text-cyan-400 font-medium">
-            Özel Otomasyon Analizi Mesleğinizi yazın — "CleverAI Analiz Et" butonuna tıklayın.
-          </p>
-
-          {/* Input+Buton Taşıyan Koyu İç Kutucuk (Full width içeride) */}
-          <div className="mt-8 rounded-xl bg-[#0B0F14] border border-white/6 p-4">
-            <div className="flex gap-4 items-center">
-              <input
-                className="flex-1 rounded-lg bg-[#07090b] border border-white/10 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
-                placeholder="Mesleğinizi buraya yazın (Örn: Emlakçı, Diş Hekimi)..."
-              />
-              <Button className="w-44 md:w-56 bg-cyan-400 hover:bg-cyan-300 text-black font-semibold">
-                CleverAI Analiz Et
-              </Button>
-            </div>
+    /* ANA DIŞ KUTU: EKRANI DÖRT YANDAN DOLDURUR, KENARDA ÇOK AZ BOŞLUK (p-2) */
+    <div className="fixed inset-0 bg-[#05070A] p-2 flex flex-col overflow-hidden">
+      
+      {/* SOHBET ALANI: TÜM EKRANI KAPLAYAN ANA ÇERÇEVE */}
+      <div className="flex-1 w-full bg-[#0D121F] border border-white/10 rounded-2xl flex flex-col relative overflow-hidden">
+        
+        {/* Üst Bilgi Çubuğu */}
+        <div className="w-full p-4 border-b border-white/5 bg-black/20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 bg-cyan-500 rounded-full animate-pulse"></div>
+            <span className="text-white font-bold tracking-wide">CleverAI Hub Asistanı</span>
           </div>
+          <button className="text-white/50 hover:text-white text-sm">Geçmişi Temizle</button>
         </div>
-      </header>
 
-      {/* ---------- HERO'YU TAM EKRAN YAPMAK İÇİN BOŞLUK BIRAK (min-h-screen zaten yaptı) ---------- */}
-      {/* Eğer hero'nun kesinlikle tam viewport'u kaplamasını istiyorsan, sarmalayıcıyı min-h-screen yap. */}
-
-      {/* ---------- YENİ BÖLÜM: ÖNE ÇIKAN PAKETLER (HER OLMASI GEREKTİĞİ YERDE BAŞLAR) ---------- */}
-      <section className="w-full bg-transparent py-12 px-6"> {/* packages section artık hero'nun altında */}
-        <div className="max-w-[1200px] mx-auto"> {/* paket kartlarını ortalıyoruz */}
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-extrabold">Öne Çıkan Paketler</h2>
-              <p className="text-white/70 mt-2">Dakikalar içinde etkinleştirebileceğiniz önceden hazırlanmış otomasyon paketleri.</p>
+        {/* MESAJLARIN AKTIĞI ALAN */}
+        <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+          {messages.map((msg, index) => (
+            <div key={index} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div className={`max-w-[80%] p-4 rounded-2xl text-lg ${
+                msg.role === "user" 
+                ? "bg-cyan-600 text-white rounded-tr-none" 
+                : "bg-white/5 border border-white/10 text-white/90 rounded-tl-none"
+              }`}>
+                {msg.content}
+              </div>
             </div>
-            <div>
-              <button className="rounded-md bg-[#1f2937] border border-white/10 px-4 py-2 text-sm text-white/90">Tümünü görüntüle</button>
-            </div>
-          </div>
-
-          {/* Paket Kartları (örnek) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Kart 1 */}
-            <article className="rounded-xl border border-white/6 bg-[#0B1014] p-6">
-              <div className="flex items-start justify-between">
-                <h3 className="text-lg font-bold">Başlangıç</h3>
-                <span className="text-xs bg-cyan-900/40 px-2 py-1 rounded-full text-cyan-200">En Popüler</span>
-              </div>
-              <div className="mt-4 text-sm text-white/80">29$/ay</div>
-              <p className="mt-4 text-white/70">Hızlı yanıt için WhatsApp + CRM temel bilgileri.</p>
-              <div className="mt-4 flex gap-2 text-xs text-white/80">
-                <span className="px-2 py-1 bg-white/5 rounded">WhatsApp</span>
-                <span className="px-2 py-1 bg-white/5 rounded">CRM</span>
-                <span className="px-2 py-1 bg-white/5 rounded">Takip</span>
-              </div>
-              <div className="mt-6 flex gap-3">
-                <button className="px-3 py-2 rounded-md bg-[#111827] border border-white/6 text-sm">Başlangıç</button>
-                <button className="ml-auto px-3 py-2 rounded-md bg-cyan-500 text-black font-medium text-sm">Detaylar</button>
-              </div>
-            </article>
-
-            {/* Kart 2 */}
-            <article className="rounded-xl border border-white/6 bg-[#0B1014] p-6">
-              <div className="flex items-start justify-between">
-                <h3 className="text-lg font-bold">Profesyonel</h3>
-                <span className="text-xs bg-cyan-900/40 px-2 py-1 rounded-full text-cyan-200">Büyüme İçin</span>
-              </div>
-              <div className="mt-4 text-sm text-white/80">59$/ay</div>
-              <p className="mt-4 text-white/70">Potansiyel müşteri kaydı + takip + randevu planlama.</p>
-              <div className="mt-4 flex gap-2 text-xs text-white/80">
-                <span className="px-2 py-1 bg-white/5 rounded">WhatsApp</span>
-                <span className="px-2 py-1 bg-white/5 rounded">CRM</span>
-                <span className="px-2 py-1 bg-white/5 rounded">Randevular</span>
-              </div>
-              <div className="mt-6 flex gap-3">
-                <button className="px-3 py-2 rounded-md bg-[#111827] border border-white/6 text-sm">Başlangıç</button>
-                <button className="ml-auto px-3 py-2 rounded-md bg-cyan-500 text-black font-medium text-sm">Detaylar</button>
-              </div>
-            </article>
-
-            {/* Kart 3 */}
-            <article className="rounded-xl border border-white/6 bg-[#0B1014] p-6">
-              <div className="flex items-start justify-between">
-                <h3 className="text-lg font-bold">Gelişmiş</h3>
-                <span className="text-xs bg-cyan-900/40 px-2 py-1 rounded-full text-cyan-200">Ölçek</span>
-              </div>
-              <div className="mt-4 text-sm text-white/80">99$/ay</div>
-              <p className="mt-4 text-white/70">Gelişmiş otomasyon, çok kanallı entegrasyon ve özelleştirme.</p>
-              <div className="mt-4 flex gap-2 text-xs text-white/80">
-                <span className="px-2 py-1 bg-white/5 rounded">WhatsApp</span>
-                <span className="px-2 py-1 bg-white/5 rounded">CRM</span>
-                <span className="px-2 py-1 bg-white/5 rounded">Mail</span>
-              </div>
-              <div className="mt-6 flex gap-3">
-                <button className="px-3 py-2 rounded-md bg-[#111827] border border-white/6 text-sm">Başlangıç</button>
-                <button className="ml-auto px-3 py-2 rounded-md bg-cyan-500 text-black font-medium text-sm">Detaylar</button>
-              </div>
-            </article>
-          </div>
+          ))}
+          <div ref={messagesEndRef} />
         </div>
-      </section>
+
+        {/* GİRİŞ ALANI: EN ALTTA SABİT */}
+        <div className="p-6 bg-black/20 border-t border-white/5">
+          <div className="max-w-5xl mx-auto flex gap-4 items-center bg-[#121827] border border-white/10 p-2 rounded-2xl shadow-2xl">
+            <input
+              className="flex-1 bg-transparent border-none px-4 py-3 text-white text-lg focus:outline-none placeholder:text-white/30"
+              placeholder="Mesleğinizi buraya yazın..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            />
+            <Button 
+              onClick={handleSend}
+              className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded-xl transition-all"
+            >
+              Gönder
+            </Button>
+          </div>
+          <p className="text-center text-white/20 text-xs mt-4">
+            CleverAI hata yapabilir. Önemli bilgileri kontrol edin.
+          </p>
+        </div>
+
+      </div>
     </div>
   );
 }
