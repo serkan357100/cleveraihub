@@ -26,35 +26,39 @@ export default function ProfessionAnalyzer() {
   };
 
   return (
-    <section className="mx-auto max-w-full px-4 py-8">
-      <Card className="p-8 border border-gray-700 rounded-lg w-full max-w-full">
-        {/* Başlık ve açıklama */}
-        <div className="mb-6 max-w-4xl mx-auto">
-          <h1 className="text-4xl font-extrabold text-white leading-tight">
+    /* px-4 ve py-4 ile dört bir yandan eşit ve az boşluk bıraktık */
+    <section className="w-full px-4 py-4">
+      {/* w-full ile genişliği ekranın tamamına yaydık */}
+      <Card className="w-full border border-gray-700 rounded-2xl p-8 md:p-12 bg-[#05070A]">
+        
+        {/* Üst Metin Alanı */}
+        <div className="mb-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
             Mesleğinize Özel <span className="text-cyan-400">Yapay Zeka Otomasyonları</span>
           </h1>
-          <p className="mt-4 text-white/80 text-lg">
+          <p className="mt-6 text-white/70 text-xl max-w-4xl">
             Kod yazmaya ya da teknik kuruluma gerek yok. CleverAI ile dakikalar içinde otomasyonunuz hazır.
           </p>
-          <p className="mt-4 text-cyan-400 font-medium text-lg">
+          <p className="mt-4 text-cyan-400 font-semibold text-lg">
             Özel Otomasyon Analizi Mesleğinizi yazın — "CleverAI Analiz Et" butonuna tıklayın.
           </p>
         </div>
 
-        {/* AI Konuşma Alanı */}
-        <div className="rounded-3xl border border-white/10 bg-[#0D121F] p-10 shadow-lg w-full max-w-5xl mx-auto">
-          {/* Sonuç alanı (varsa) */}
+        {/* AI Giriş Alanı - Geniş ve Ferah */}
+        <div className="rounded-3xl border border-white/10 bg-[#0D121F] p-8 shadow-2xl w-full">
+          
+          {/* Sonuç Alanı (Analiz sonrası metin buraya gelecek) */}
           {result && (
-            <div className="mb-8 overflow-y-auto max-h-[400px] prose prose-invert text-white/90">
+            <div className="mb-8 overflow-y-auto max-h-[400px] prose prose-invert text-white/90 max-w-none">
               <div dangerouslySetInnerHTML={{ __html: result.summary }} />
             </div>
           )}
 
-          {/* Input ve Buton */}
-          <div className="flex gap-6">
+          {/* Input ve Buton Satırı */}
+          <div className="flex flex-col md:flex-row gap-4">
             <input
-              className="flex-1 rounded-xl border border-white/20 bg-black/40 px-6 py-5 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition text-lg"
-              placeholder='Mesleğinizi buraya yazın...'
+              className="flex-1 rounded-2xl border border-white/20 bg-black/60 px-6 py-5 text-white text-xl placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+              placeholder="Mesleğinizi buraya yazın (Örn: Gayrimenkul Danışmanı)..."
               value={profession}
               onChange={(e) => setProfession(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleAnalyze()}
@@ -62,9 +66,9 @@ export default function ProfessionAnalyzer() {
             <Button
               onClick={handleAnalyze}
               disabled={loading}
-              className="w-64 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-lg"
+              className="md:w-72 h-16 bg-cyan-500 hover:bg-cyan-400 text-black font-black text-xl rounded-2xl shadow-lg shadow-cyan-500/20"
             >
-              CleverAI Analiz Et
+              {loading ? "Analiz Ediliyor..." : "CleverAI Analiz Et"}
             </Button>
           </div>
         </div>
