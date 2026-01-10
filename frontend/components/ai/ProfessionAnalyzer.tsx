@@ -26,8 +26,8 @@ export default function ProfessionAnalyzer() {
   };
 
   return (
-    <section className="mx-auto max-w-5xl px-4 py-8">
-      <Card className="p-6 md:p-8 border border-gray-700 rounded-lg">
+    <section className="mx-auto max-w-full px-2 sm:px-4 py-8">
+      <Card className="p-6 md:p-8 border border-gray-700 rounded-lg max-w-full w-full">
         {/* ÜST KISIM: Başlık ve Yeni Metin */}
         <div className="mb-6">
           <h1 className="text-4xl font-extrabold text-white leading-tight">
@@ -36,15 +36,13 @@ export default function ProfessionAnalyzer() {
           <p className="mt-4 text-white/80 text-lg">
             Kod yazmaya ya da teknik kuruluma gerek yok. CleverAI ile dakikalar içinde otomasyonunuz hazır.
           </p>
-          {/* İSTEDİĞİN YENİ METİN BURADA */}
           <p className="mt-4 text-cyan-400 font-medium text-lg">
             Özel Otomasyon Analizi Mesleğinizi yazın — "CleverAI Analiz Et" butonuna tıklayın.
           </p>
         </div>
 
         {/* AI KUTUSU: İÇİ BOMBOŞ, SADECE INPUT VE BUTON */}
-        <div className="rounded-3xl border border-white/10 bg-[#0D121F] p-8 shadow-lg">
-          
+        <div className="rounded-3xl border border-white/10 bg-[#0D121F] p-8 shadow-lg w-full">
           {/* Sonuç Alanı (Sadece sonuç geldiğinde görünür, başlangıçta bomboş) */}
           {result && (
             <div className="mb-6 overflow-y-auto max-h-[300px] prose prose-invert text-white/90">
