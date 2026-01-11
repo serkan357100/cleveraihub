@@ -35,7 +35,7 @@ export default function LayeredChatHomepage() {
 
   return (
     <div className="relative h-screen bg-[#0D121F] text-white flex flex-col items-center overflow-hidden">
-      {/* Başlık ve açıklama: konum ve container değişmedi; sadece metinler 2px yukarı taşındı ve açıklama kısaltıldı */}
+      {/* Header area with positional adjustment only */}
       <header className="h-[22vh] w-full max-w-7xl px-6 flex flex-col justify-center items-center text-center z-10">
         <h1
           className="text-4xl md:text-5xl font-extrabold tracking-tight whitespace-nowrap"
@@ -51,12 +51,12 @@ export default function LayeredChatHomepage() {
         </p>
       </header>
 
-      {/* Chat alanı: Konumu ve yapısı değiştirilmedi */}
+      {/* Chat area: No modifications made */}
       <main
         className="absolute top-[15vh] w-[90vw] max-w-7xl bg-[#121827] rounded-3xl shadow-2xl flex flex-col"
         style={{ height: "70vh" }}
       >
-        {/* Mesajlar */}
+        {/* Messages */}
         <div className="flex-grow overflow-y-auto p-6 space-y-4 custom-scrollbar">
           {messages.map((msg, idx) => (
             <div
@@ -73,7 +73,7 @@ export default function LayeredChatHomepage() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Giriş alanı */}
+        {/* Input area */}
         <div className="p-6 border-t border-white/10 flex gap-4">
           <input
             type="text"
