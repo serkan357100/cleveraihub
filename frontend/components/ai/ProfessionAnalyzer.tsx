@@ -35,7 +35,7 @@ export default function LayeredChatHomepage() {
 
   return (
     <div className="relative h-screen bg-[#0D121F] text-white flex flex-col items-center overflow-hidden">
-      {/* Header area with positional adjustment only */}
+      {/* Header area: Subtitle removed, title remains unchanged */}
       <header className="h-[22vh] w-full max-w-7xl px-6 flex flex-col justify-center items-center text-center z-10">
         <h1
           className="text-4xl md:text-5xl font-extrabold tracking-tight whitespace-nowrap"
@@ -43,12 +43,6 @@ export default function LayeredChatHomepage() {
         >
           Mesleğinize Özel <span className="text-cyan-400">Yapay Zeka Otomasyonları</span>
         </h1>
-        <p
-          className="mt-1 text-white/60 text-lg md:text-xl whitespace-nowrap"
-          style={{ transform: "translateY(-2px)" }}
-        >
-          Kod yazmaya gerek yok. CleverAI ile otomasyonunuz dakikalar içinde hazır.
-        </p>
       </header>
 
       {/* Chat area: No modifications made */}
