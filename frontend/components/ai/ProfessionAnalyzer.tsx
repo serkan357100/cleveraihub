@@ -35,11 +35,11 @@ export default function LayeredChatHomepage() {
 
   return (
     <div className="relative h-screen bg-[#0D121F] text-white flex flex-col items-center overflow-hidden">
-      {/* Title only, moved up by ~2mm (approx 2px), subtitle removed */}
+      {/* Title only: forced vertical offset applied via CSS transform */}
       <header className="h-[22vh] w-full max-w-7xl px-6 flex flex-col justify-center items-center text-center z-10">
         <h1
           className="text-4xl md:text-5xl font-extrabold tracking-tight whitespace-nowrap"
-          style={{ transform: "translateY(-2px)" }}
+          style={{ transform: "translateY(-8px)" }}
         >
           Mesleğinize Özel <span className="text-cyan-400">Yapay Zeka Otomasyonları</span>
         </h1>
