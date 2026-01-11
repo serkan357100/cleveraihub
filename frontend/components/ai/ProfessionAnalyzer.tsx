@@ -35,7 +35,7 @@ export default function LayeredChatHomepage() {
 
   return (
     <div className="relative h-screen bg-[#0D121F] text-white flex flex-col items-center overflow-hidden">
-      {/* Header area: Subtitle removed, title remains unchanged */}
+      {/* Title only, moved up by ~2mm (approx 2px), subtitle removed */}
       <header className="h-[22vh] w-full max-w-7xl px-6 flex flex-col justify-center items-center text-center z-10">
         <h1
           className="text-4xl md:text-5xl font-extrabold tracking-tight whitespace-nowrap"
@@ -45,7 +45,7 @@ export default function LayeredChatHomepage() {
         </h1>
       </header>
 
-      {/* Chat area: No modifications made */}
+      {/* Chat area unchanged */}
       <main
         className="absolute top-[15vh] w-[90vw] max-w-7xl bg-[#121827] rounded-3xl shadow-2xl flex flex-col"
         style={{ height: "70vh" }}
