@@ -61,7 +61,7 @@ export default function HomePage() {
 
   return (
     <div className="relative min-h-screen bg-black text-white font-sans">
-      {/* NAVBAR / LOGO restored */}
+      {/* NAVBAR / LOGO */}
       <nav className="w-full h-20 flex items-center justify-between px-8 border-b border-white/5">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-cyan-400 rounded-md flex items-center justify-center text-black font-bold">
@@ -84,7 +84,7 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* HERO TITLE (unchanged chat positioning) */}
+      {/* HERO TITLE */}
       <header className="h-[22vh] w-full max-w-7xl px-6 mx-auto flex flex-col justify-center items-center text-center z-10">
         <h1
           className="text-4xl md:text-5xl font-extrabold tracking-tight whitespace-nowrap"
@@ -94,7 +94,7 @@ export default function HomePage() {
         </h1>
       </header>
 
-      {/* Chat area: keep color, size, position exactly as before */}
+      {/* CHAT AREA */}
       <main
         className="absolute top-[15vh] left-1/2 transform -translate-x-1/2 w-[90vw] max-w-7xl bg-[#121827] rounded-3xl shadow-2xl flex flex-col"
         style={{ height: "70vh" }}
@@ -128,7 +128,7 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Restored site sections (kept below; do not interfere with chat container) */}
+      {/* MARKET SECTION */}
       <section id="market" className="pt-[95vh] pb-24 w-full">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-2xl font-bold mb-4">Market</h2>
@@ -140,6 +140,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* PACKAGES SECTION */}
       <section id="packages" className="pb-24 w-full">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-2xl font-bold mb-4">Packages</h2>
@@ -151,6 +152,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* DASHBOARD SECTION */}
       <section id="dashboard" className="pb-24 w-full">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
