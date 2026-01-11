@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
+import Button from "../components/ui/Button";
 
-// Basit ve sağlam Buton bileşeni
-const Button = ({ children, onClick, className }: { children: React.ReactNode; onClick?: () => void; className?: string }) => (
-  <button
-    onClick={onClick}
-    className={`bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-6 py-2 rounded-lg transition-all active:scale-95 ${className ?? ""}`}
-  >
-    {children}
-  </button>
-);
-
-export default function CleverAIHub() {
+export default function HomePage() {
   const [messages, setMessages] = useState([
     {
       role: "ai",
@@ -21,7 +14,6 @@ export default function CleverAIHub() {
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const isInitialMount = useRef(true);
 
-  // Sadece yeni mesaj geldiğinde aşağı kaydır, sayfa ilk açıldığında değil
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -41,30 +33,23 @@ export default function CleverAIHub() {
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
-      
-      {/* NAVBAR */}
-      <nav className="w-full h-20 border-b border-white/10 flex items-center justify-between px-8 bg-black">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-cyan-500 rounded-lg flex items-center justify-center text-black font-black text-xl">C</div>
-          <span className="text-2xl font-bold tracking-tighter">CleverAI<span className="text-cyan-400">Hub</span></span>
-        </div>
-        <div className="flex items-center gap-6">
-          <a href="#" className="text-white/70 hover:text-white transition">Market</a>
-          <a href="#" className="text-white/70 hover:text-white transition">Paketler</a>
-          <Button>Giriş Yap</Button>
-        </div>
-      </nav>
+      <Navbar />
 
-      {/* HERO & CHAT AREA */}
-      <div className="flex flex-col items-center pt-16 px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4" style={{ transform: 'translateY(-8px)' }}>
-            Mesleğinize Özel <span className="text-cyan-400">Yapay Zeka Otomasyonları</span>
-          </h1>
-        </div>
+      {/* HERO SECTION */}
+      <div className="flex flex-col items-center pt-12 px-4">
+        {/* Başlık Düzenlemesi: 2.5rem ve -0.5rem yukarı taşıma */}
+        <h1 
+          className="font-black tracking-tight text-center mb-6"
+          style={{ fontSize: '2.5rem', marginTop: '-0.5rem' }}
+        >
+          Mesleğinize Özel <span className="text-cyan-400">Yapay Zeka Otomasyonları</span>
+        </h1>
 
-        {/* CHAT BOX */}
-        <div className="w-full max-w-5xl bg-[#0D121F] border border-white/10 rounded-3xl shadow-2xl flex flex-col h-[60vh] overflow-hidden">
+        {/* Chat Paneli Düzenlemesi: %95 genişlik, 800px max-width ve yukarı kaydırma */}
+        <div 
+          className="bg-[#0D121F] border border-white/10 rounded-3xl shadow-2xl flex flex-col h-[55vh] overflow-hidden"
+          style={{ width: '95%', maxWidth: '800px', marginTop: '-0.25rem' }}
+        >
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
@@ -84,11 +69,32 @@ export default function CleverAIHub() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
             />
-            <Button onClick={handleSend}>Gönder</Button>
+            <button 
+              onClick={handleSend}
+              className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-6 py-2 rounded-lg transition-all"
+            >
+              Gönder
+            </button>
           </div>
         </div>
       </div>
 
+      {/* MARKET & PACKAGES (Eski Tasarım Öğeleri) */}
+      <section className="py-20 px-8 max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold mb-10 text-center">Popüler Paketler</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {["Emlakçı Paketi", "E-Ticaret Paketi", "Sağlık Paketi"].map((pkg) => (
+            <div key={pkg} className="bg-[#0D121F] border border-white/10 p-6 rounded-2xl hover:border-cyan-500/50 transition">
+              <h3 className="text-xl font-bold mb-2 text-cyan-400">{pkg}</h3>
+              <p className="text-white/50 text-sm mb-4">Bu meslek grubu için optimize edilmiş tam otomatik çözüm.</p>
+              <div className="text-2xl font-bold mb-4">$49<span className="text-sm text-white/30">/ay</span></div>
+              <button className="w-full py-2 bg-white/5 rounded-lg hover:bg-cyan-500 hover:text-black transition">İncele</button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 }
