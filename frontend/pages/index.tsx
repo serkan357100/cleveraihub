@@ -1,7 +1,15 @@
-// File: pages/index.tsx
-
 import React, { useState, useEffect, useRef } from "react";
-import Button from "../ui/Button";
+
+function Button({ children, onClick, className }: { children: React.ReactNode; onClick: () => void; className?: string }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-6 py-3 rounded-xl transition ${className ?? ""}`}
+    >
+      {children}
+    </button>
+  );
+}
 
 export default function LayeredChatHomepage() {
   const [messages, setMessages] = useState([
@@ -42,7 +50,7 @@ export default function LayeredChatHomepage() {
 
   return (
     <div className="relative h-screen bg-black text-white flex flex-col items-center overflow-hidden">
-      {/* Header area: Title only with forced vertical offset */}
+      {/* Başlık */}
       <header className="h-[22vh] w-full max-w-7xl px-6 flex flex-col justify-center items-center text-center z-10">
         <h1
           className="text-4xl md:text-5xl font-extrabold tracking-tight whitespace-nowrap"
@@ -52,12 +60,11 @@ export default function LayeredChatHomepage() {
         </h1>
       </header>
 
-      {/* Chat area: Dominant container with initial message */}
+      {/* Chat alanı */}
       <main
         className="absolute top-[15vh] w-[90vw] max-w-7xl bg-[#121827] rounded-3xl shadow-2xl flex flex-col"
         style={{ height: "70vh" }}
       >
-        {/* Messages area */}
         <div className="flex-grow overflow-y-auto p-6 space-y-4 custom-scrollbar">
           {messages.map((msg, idx) => (
             <div
@@ -74,7 +81,6 @@ export default function LayeredChatHomepage() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input area */}
         <div className="p-6 border-t border-white/10 flex gap-4">
           <input
             type="text"
@@ -84,12 +90,7 @@ export default function LayeredChatHomepage() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
           />
-          <Button
-            onClick={handleSend}
-            className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-6 py-3 rounded-xl"
-          >
-            Gönder
-          </Button>
+          <Button onClick={handleSend}>Gönder</Button>
         </div>
       </main>
     </div>
