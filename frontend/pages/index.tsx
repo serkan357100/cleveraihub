@@ -5,7 +5,8 @@ export default function LayeredChatHomepage() {
   const [messages, setMessages] = useState([
     {
       role: "ai",
-      content: "Merhaba, ben CleverAI; mesleğinize özel otomasyon paketlerini kodlama veya teknik kurulum gerekmeden hazırlarım.",
+      content:
+        "Merhaba, ben CleverAI. Mesleğinizi yazın, sizin için en uygun otomasyon paketlerini saniyeler içinde hazırlayayım.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -26,7 +27,7 @@ export default function LayeredChatHomepage() {
         ...prev,
         {
           role: "ai",
-          content: `Anladım, bir ${input} için en uygun otomasyonları hazırlıyorum...`,
+          content: `Anladım, bir ${input} için şu otomasyonları öneririm: WhatsApp Takip, CRM Entegrasyonu ve Randevu Sistemi. Aktif etmemi ister misiniz?`,
         },
       ]);
     }, 1000);
@@ -34,7 +35,7 @@ export default function LayeredChatHomepage() {
 
   return (
     <div className="relative h-screen bg-[#0D121F] text-white flex flex-col items-center overflow-hidden">
-      {/* Header area: Title only with forced vertical offset */}
+      {/* Title only: forced vertical offset applied via CSS transform */}
       <header className="h-[22vh] w-full max-w-7xl px-6 flex flex-col justify-center items-center text-center z-10">
         <h1
           className="text-4xl md:text-5xl font-extrabold tracking-tight whitespace-nowrap"
@@ -44,12 +45,12 @@ export default function LayeredChatHomepage() {
         </h1>
       </header>
 
-      {/* Chat area: Dominant container with initial message */}
+      {/* Chat area unchanged */}
       <main
         className="absolute top-[15vh] w-[90vw] max-w-7xl bg-[#121827] rounded-3xl shadow-2xl flex flex-col"
         style={{ height: "70vh" }}
       >
-        {/* Messages area */}
+        {/* Messages */}
         <div className="flex-grow overflow-y-auto p-6 space-y-4 custom-scrollbar">
           {messages.map((msg, idx) => (
             <div
